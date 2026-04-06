@@ -29,575 +29,121 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-  /* Scanlines overlay */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background: repeating-linear-gradient(0deg, rgba(0,255,231,0.022) 0px, rgba(0,255,231,0.022) 1px, transparent 1px, transparent 3px);
   }
-  /* Grid BG */
   body::after {
     content: '';
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(0,255,231,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,231,0.04) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(0,255,231,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,231,0.04) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 100%);
   }
-
-  /* ─── CORNER BRACKETS ─────────────────── */
-  .bracket {
-    position: absolute; width: 18px; height: 18px;
-    border-color: var(--acid); border-style: solid; opacity: 0.7;
-  }
+  .bracket { position: absolute; width: 18px; height: 18px; border-color: var(--acid); border-style: solid; opacity: 0.7; }
   .bracket-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
   .bracket-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
   .bracket-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
   .bracket-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
-
-  /* ─── HERO ─────────────────────────────── */
-  .hero-glow {
-    position: absolute;
-    width: 700px; height: 320px;
-    background: radial-gradient(ellipse, rgba(0,255,231,0.10) 0%, transparent 70%);
-    top: -60px; left: 50%; transform: translateX(-50%);
-    pointer-events: none;
-  }
-  .logo-icon {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 52px; height: 52px;
-    border: 1.5px solid var(--acid);
-    box-shadow: var(--glow);
-    position: relative;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    background: rgba(0,255,231,0.07);
-    font-size: 22px;
-  }
-  .tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px; letter-spacing: 0.15em;
-    color: var(--acid); opacity: 0.7;
-  }
-  .heading-main {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700; letter-spacing: -0.01em;
-    line-height: 1.1;
-  }
-
-  /* ─── CARD PANEL ────────────────────────── */
-  .panel {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    position: relative;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
+  .hero-glow { position: absolute; width: 700px; height: 320px; background: radial-gradient(ellipse, rgba(0,255,231,0.10) 0%, transparent 70%); top: -60px; left: 50%; transform: translateX(-50%); pointer-events: none; }
+  .logo-icon { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border: 1.5px solid var(--acid); box-shadow: var(--glow); position: relative; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); background: rgba(0,255,231,0.07); font-size: 22px; }
+  .tag { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--acid); opacity: 0.7; }
+  .heading-main { font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+  .panel { background: var(--glass); border: 1px solid var(--border); border-radius: 4px; position: relative; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
   .panel-accent { border-top: 2px solid var(--acid); }
   .panel-accent2 { border-top: 2px solid var(--acid2); }
-
-  /* ─── TEXTAREA ──────────────────────────── */
-  .cyber-textarea {
-    width: 100%;
-    background: rgba(0,255,231,0.03);
-    border: 1px solid rgba(0,255,231,0.20);
-    border-radius: 3px;
-    color: #c8d6e8;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    padding: 16px 18px;
-    resize: vertical;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .cyber-textarea::placeholder { color: rgba(140,170,200,0.35); font-style: italic; }
-  .cyber-textarea:focus {
-    border-color: var(--acid);
-    box-shadow: 0 0 0 2px rgba(0,255,231,0.10), 0 0 18px rgba(0,255,231,0.10);
-  }
-
-  /* ─── BUTTON ────────────────────────────── */
-  .btn-assassin {
-    position: relative; overflow: hidden;
-    background: transparent;
-    border: 1.5px solid var(--acid);
-    color: var(--acid);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700; font-size: 17px; letter-spacing: 0.12em;
-    padding: 14px 40px;
-    cursor: pointer;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-    transition: all 0.2s;
-    text-transform: uppercase;
-    box-shadow: var(--glow);
-  }
-  .btn-assassin::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(0,255,231,0.12), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-  }
-  .btn-assassin:hover::before { transform: translateX(100%); }
-  .btn-assassin:hover {
-    background: rgba(0,255,231,0.08);
-    box-shadow: 0 0 40px rgba(0,255,231,0.28), 0 0 4px rgba(0,255,231,0.8);
-  }
-  .btn-assassin:disabled {
-    opacity: 0.5; cursor: not-allowed;
-    box-shadow: none;
-  }
-
-  /* ─── LOADING STATES ────────────────────── */
-  #loading {
-    display: none;
-    flex-direction: column; align-items: center; gap: 18px;
-    padding: 36px 0;
-  }
-  .spinner-hex {
-    width: 60px; height: 60px;
-    position: relative;
-    animation: hex-spin 2s linear infinite;
-  }
-  .spinner-hex::before, .spinner-hex::after {
-    content: '';
-    position: absolute; inset: 0;
-    border: 2px solid transparent;
-    border-top-color: var(--acid);
-    border-radius: 50%;
-  }
-  .spinner-hex::before { animation: spin 1s linear infinite; }
-  .spinner-hex::after {
-    inset: 8px;
-    border-top-color: var(--acid2);
-    animation: spin 0.7s linear infinite reverse;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .loading-text {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px; color: var(--acid);
-    letter-spacing: 0.08em;
-    animation: blink-text 1.2s ease-in-out infinite;
-  }
-  @keyframes blink-text {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-  .loading-bar-wrap {
-    width: 260px; height: 3px;
-    background: rgba(0,255,231,0.10);
-    border-radius: 2px; overflow: hidden;
-  }
-  .loading-bar-inner {
-    height: 100%;
-    background: linear-gradient(90deg, var(--acid2), var(--acid));
-    animation: loading-sweep 1.8s ease-in-out infinite;
-    border-radius: 2px;
-  }
-  @keyframes loading-sweep {
-    0% { width: 0%; margin-left: 0; }
-    50% { width: 70%; margin-left: 30%; }
-    100% { width: 0%; margin-left: 100%; }
-  }
-
-  /* ─── RESPONSE TABS ─────────────────────── */
-  .tab-btn {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 600; font-size: 13px; letter-spacing: 0.1em;
-    padding: 7px 20px;
-    border: 1px solid rgba(0,255,231,0.18);
-    background: transparent;
-    color: rgba(150,200,220,0.6);
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.2s;
-    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-  }
-  .tab-btn.active {
-    background: rgba(0,255,231,0.10);
-    color: var(--acid);
-    border-color: var(--acid);
-    box-shadow: var(--glow);
-  }
-  .tab-btn:hover:not(.active) {
-    background: rgba(0,255,231,0.05);
-    color: #c8d6e8;
-    border-color: rgba(0,255,231,0.35);
-  }
-  .response-content {
-    font-size: 15px; line-height: 1.75;
-    color: #d0e0f0;
-  }
+  .cyber-textarea { width: 100%; background: rgba(0,255,231,0.03); border: 1px solid rgba(0,255,231,0.20); border-radius: 3px; color: #c8d6e8; font-family: 'Exo 2', sans-serif; font-size: 15px; padding: 16px 18px; outline: none; transition: all 0.2s; }
+  .cyber-textarea:focus { border-color: var(--acid); box-shadow: 0 0 18px rgba(0,255,231,0.10); }
+  .btn-assassin { position: relative; overflow: hidden; background: transparent; border: 1.5px solid var(--acid); color: var(--acid); font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 17px; padding: 14px 40px; cursor: pointer; clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%); transition: all 0.2s; text-transform: uppercase; box-shadow: var(--glow); }
+  .btn-assassin:hover { background: rgba(0,255,231,0.08); box-shadow: 0 0 40px rgba(0,255,231,0.28); }
+  .btn-assassin:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+  #loading { display: none; }
+  .loading-text { font-family: 'Share Tech Mono', monospace; font-size: 13px; color: var(--acid); animation: blink-text 1.2s infinite; }
+  @keyframes blink-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .tab-btn { font-family: 'Rajdhani', sans-serif; font-weight: 600; padding: 7px 20px; border: 1px solid rgba(0,255,231,0.18); color: rgba(150,200,220,0.6); cursor: pointer; text-transform: uppercase; transition: all 0.2s; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .tab-btn.active { background: rgba(0,255,231,0.10); color: var(--acid); border-color: var(--acid); box-shadow: var(--glow); }
   .response-pane { display: none; }
   .response-pane.active { display: block; }
-
-  .copy-btn {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px; letter-spacing: 0.1em;
-    padding: 5px 14px;
-    border: 1px solid rgba(0,255,231,0.25);
-    background: transparent; color: var(--acid);
-    cursor: pointer; border-radius: 2px;
-    transition: all 0.2s;
-    text-transform: uppercase;
-  }
-  .copy-btn:hover { background: rgba(0,255,231,0.08); border-color: var(--acid); }
-
-  /* ─── VALUE BOX ─────────────────────────── */
-  .value-box {
-    background: linear-gradient(135deg, rgba(255,45,120,0.07) 0%, rgba(0,255,231,0.04) 100%);
-    border: 1px solid rgba(255,45,120,0.30);
-    border-left: 3px solid var(--acid2);
-    border-radius: 3px; padding: 20px 24px;
-  }
-  .value-number {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700; font-size: 42px;
-    color: var(--acid3);
-    text-shadow: 0 0 20px rgba(255,230,0,0.4);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  /* ─── CTA ─────────────────────────────────── */
-  .btn-pro {
-    display: inline-block;
-    background: linear-gradient(90deg, var(--acid2), #ff6a00);
-    color: #fff;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700; font-size: 16px; letter-spacing: 0.08em;
-    padding: 14px 36px;
-    border: none; cursor: pointer;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-    text-transform: uppercase;
-    box-shadow: 0 0 30px rgba(255,45,120,0.35);
-    transition: all 0.2s; text-decoration: none;
-  }
-  .btn-pro:hover { box-shadow: 0 0 50px rgba(255,45,120,0.55); transform: translateY(-1px); }
-
-  /* ─── EMAIL FORM ────────────────────────── */
-  .cyber-input {
-    background: rgba(0,255,231,0.03);
-    border: 1px solid rgba(0,255,231,0.20);
-    border-radius: 3px;
-    color: #c8d6e8; font-family: 'Exo 2', sans-serif;
-    font-size: 14px; padding: 10px 14px; outline: none;
-    transition: border-color 0.2s;
-  }
-  .cyber-input:focus { border-color: var(--acid); }
-  .cyber-input::placeholder { color: rgba(140,170,200,0.35); }
-
-  /* ─── STAT PILLS ────────────────────────── */
-  .stat-pill {
-    background: rgba(0,255,231,0.05);
-    border: 1px solid rgba(0,255,231,0.15);
-    border-radius: 2px; padding: 8px 16px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 12px; color: rgba(0,255,231,0.7);
-    letter-spacing: 0.05em;
-  }
-  .stat-pill strong {
-    display: block; font-size: 20px;
-    color: var(--acid); font-family: 'Rajdhani', sans-serif;
-    font-weight: 700; letter-spacing: 0;
-  }
-
-  /* ─── ANIMATIONS ────────────────────────── */
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-in { animation: fadeInUp 0.5s ease forwards; }
-  .delay-1 { animation-delay: 0.1s; opacity: 0; }
-  .delay-2 { animation-delay: 0.2s; opacity: 0; }
-  .delay-3 { animation-delay: 0.3s; opacity: 0; }
-
-  /* ─── RESULT REVEAL ─────────────────────── */
-  #results { display: none; }
-  #results.visible { display: block; animation: fadeInUp 0.5s ease forwards; }
-
-  /* ─── MISC ──────────────────────────────── */
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--acid), transparent);
-    opacity: 0.18;
-  }
-  .mono { font-family: 'Share Tech Mono', monospace; }
-  .text-acid { color: var(--acid); }
-  .text-acid2 { color: var(--acid2); }
-
-  /* ─── SCROLLBAR ─────────────────────────── */
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: var(--bg2); }
-  ::-webkit-scrollbar-thumb { background: var(--acid); border-radius: 2px; }
-
-  /* Error state */
-  .error-msg {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px; color: var(--acid2);
-    background: rgba(255,45,120,0.07);
-    border: 1px solid rgba(255,45,120,0.25);
-    border-radius: 3px; padding: 12px 16px;
-    display: none;
-  }
+  .value-box { background: linear-gradient(135deg, rgba(255,45,120,0.07) 0%, rgba(0,255,231,0.04) 100%); border: 1px solid rgba(255,45,120,0.30); border-left: 3px solid var(--acid2); padding: 20px 24px; border-radius: 3px; }
+  .value-number { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 42px; color: var(--acid3); text-shadow: 0 0 20px rgba(255,230,0,0.4); }
+  .btn-pro { display: inline-block; background: linear-gradient(90deg, var(--acid2), #ff6a00); color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; padding: 14px 36px; border: none; cursor: pointer; clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%); text-transform: uppercase; box-shadow: 0 0 30px rgba(255,45,120,0.35); text-decoration: none; }
+  .error-msg { font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #ff2d78; background: rgba(255,45,120,0.1); border: 1px solid var(--acid2); padding: 12px; border-radius: 3px; display: none; }
 </style>
 </head>
 <body>
 
 <div style="position:relative;z-index:1;" class="min-h-screen">
-
-  <!-- ── TOP NAV ─────────────────────────── -->
   <nav style="border-bottom:1px solid var(--border);background:rgba(5,8,16,0.92);backdrop-filter:blur(16px);" class="sticky top-0 z-50 px-6 py-3 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="logo-icon">🗡️</div>
       <div>
-        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:#fff;letter-spacing:0.04em;">
-          Review<span class="text-acid">Assassin</span> <span style="color:var(--acid2)">AI</span>
-        </div>
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:#fff;">Review<span class="text-acid">Assassin</span> AI</div>
         <div class="tag">PR DEFENSE SYSTEM v2.4</div>
       </div>
     </div>
-    <div class="flex items-center gap-4">
-      <div class="stat-pill text-center" style="display:flex;gap:16px;">
-        <span><strong>12,847</strong>reviews neutralized</span>
-        <span style="display:none;" class="sm:block"><strong>$5.7M</strong>value protected</span>
-      </div>
-      <a href="#cta" class="btn-pro" style="padding:9px 20px;font-size:13px;">Go Pro →</a>
-    </div>
+    <a href="https://appsumo.com" target="_blank" class="btn-pro" style="padding:8px 16px;font-size:12px;">Go Pro →</a>
   </nav>
 
-  <!-- ── HERO ───────────────────────────── -->
   <section class="relative px-6 pt-16 pb-10 text-center max-w-4xl mx-auto">
     <div class="hero-glow"></div>
-    <div class="fade-in">
-      <div class="tag mb-3" style="font-size:12px;">[ ARMED WITH GPT-4 CLASS AI · TRUSTED BY 3,200+ BUSINESSES ]</div>
-      <h1 class="heading-main text-white mb-4" style="font-size:clamp(36px,6vw,72px);">
-        Turn Every Hater<br>Into a <span class="text-acid">Brand Advocate</span>
-      </h1>
-      <p style="font-size:16px;color:rgba(180,210,230,0.75);max-width:540px;margin:0 auto 24px;line-height:1.6;">
-        Paste any negative review. Get 3 battle-tested, professional PR responses in seconds — before the damage spreads.
-      </p>
-      <div class="flex items-center justify-center gap-3 flex-wrap" style="font-size:13px;color:rgba(150,190,210,0.6);">
-        <span class="flex items-center gap-1"><span class="text-acid">✓</span> Formal Response</span>
-        <span style="color:rgba(0,255,231,0.2)">│</span>
-        <span class="flex items-center gap-1"><span class="text-acid">✓</span> Kind Response</span>
-        <span style="color:rgba(0,255,231,0.2)">│</span>
-        <span class="flex items-center gap-1"><span class="text-acid">✓</span> Strategic Response</span>
-      </div>
-    </div>
+    <h1 class="heading-main text-white mb-4" style="font-size:clamp(32px, 5vw, 64px);">
+      Turn Every Hater Into a <span class="text-acid">Brand Advocate</span>
+    </h1>
+    <p style="color:rgba(180,210,230,0.7); max-width:600px; margin: 0 auto 30px;">
+      Paste a negative review. Our AI crafts 3 perfect PR responses to neutralize brand damage instantly.
+    </p>
   </section>
 
-  <!-- ── MAIN TOOL ──────────────────────── -->
   <main class="max-w-3xl mx-auto px-6 pb-20">
-
-    <!-- Input Panel -->
-    <div class="panel panel-accent p-6 mb-6 fade-in delay-1">
-      <div class="bracket bracket-tl"></div>
-      <div class="bracket bracket-tr"></div>
-      <div class="bracket bracket-bl"></div>
-      <div class="bracket bracket-br"></div>
-
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;color:#fff;letter-spacing:0.05em;">
-            <span class="text-acid">►</span> REVIEW INTEL INPUT
-          </div>
-          <div class="tag">PASTE THE NEGATIVE REVIEW BELOW</div>
-        </div>
-        <div class="mono" style="font-size:11px;color:rgba(0,255,231,0.4);">TARGET ACQUIRED</div>
-      </div>
-
-      <textarea id="reviewInput" class="cyber-textarea" rows="7"
-        placeholder="Paste the negative customer review here... e.g. 'Hi, I'm John. I ordered last week and the package never arrived. Terrible service, will never use again. 1 star.'"
-      ></textarea>
-
-      <div class="flex items-center justify-between mt-4 flex-wrap gap-3">
-        <div class="mono" style="font-size:11px;color:rgba(0,255,231,0.35);" id="charCount">0 CHARACTERS</div>
-        <button id="generateBtn" class="btn-assassin" onclick="generateResponses()">
-          ⚡ Generate Perfect Response
-        </button>
+    <div class="panel panel-accent p-6 mb-6">
+      <div class="bracket bracket-tl"></div><div class="bracket bracket-tr"></div><div class="bracket bracket-bl"></div><div class="bracket bracket-br"></div>
+      <div class="tag mb-2">PASTE NEGATIVE REVIEW BELOW</div>
+      <textarea id="reviewInput" class="cyber-textarea" rows="6" placeholder="Paste that 1-star review here..."></textarea>
+      <div class="flex justify-end mt-4">
+        <button id="generateBtn" class="btn-assassin" onclick="generateResponses()">⚡ Generate Perfect Response</button>
       </div>
     </div>
 
-    <!-- Error -->
-    <div id="errorMsg" class="error-msg mb-6">
-      ⚠ <span id="errorText">An error occurred. Please try again.</span>
-    </div>
+    <div id="errorMsg" class="error-msg mb-6">⚠ <span id="errorText"></span></div>
 
-    <!-- Loading -->
-    <div id="loading" class="panel p-8 mb-6 flex flex-col items-center">
-      <div class="spinner-hex mb-2">
-        <div style="width:60px;height:60px;border:2px solid transparent;border-top-color:var(--acid);border-radius:50%;animation:spin 1s linear infinite;position:absolute;"></div>
-        <div style="width:40px;height:40px;border:2px solid transparent;border-top-color:var(--acid2);border-radius:50%;animation:spin 0.7s linear infinite reverse;position:absolute;top:10px;left:10px;"></div>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:16px;">🗡️</div>
-      </div>
-      <div id="loadingText" class="loading-text mt-4">SCANNING FOR BRAND DAMAGE...</div>
-      <div class="loading-bar-wrap mt-3">
-        <div class="loading-bar-inner"></div>
+    <div id="loading" class="panel p-10 mb-6 flex flex-col items-center">
+      <div class="loading-text" id="loadingText">SCANNING BRAND DAMAGE...</div>
+      <div style="width:200px; height:2px; background:rgba(0,255,231,0.1); margin-top:15px; overflow:hidden;">
+        <div style="width:50%; height:100%; background:var(--acid); animation: slide 1s infinite linear;"></div>
       </div>
     </div>
+    <style> @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(200%); } } </style>
 
-    <!-- Results -->
-    <div id="results">
-
-      <!-- Tab Bar -->
-      <div class="flex items-center gap-2 mb-4 flex-wrap">
-        <button class="tab-btn active" onclick="switchTab('formal', this)">⬡ Formal</button>
-        <button class="tab-btn" onclick="switchTab('kind', this)">◈ Kind</button>
-        <button class="tab-btn" onclick="switchTab('strategic', this)">◆ Strategic</button>
+    <div id="results" style="display:none;">
+      <div class="flex gap-2 mb-4">
+        <button class="tab-btn active" onclick="switchTab('formal', this)">Formal</button>
+        <button class="tab-btn" onclick="switchTab('kind', this)">Kind</button>
+        <button class="tab-btn" onclick="switchTab('strategic', this)">Strategic</button>
       </div>
 
-      <!-- Response Panel -->
       <div class="panel panel-accent p-6 mb-6">
-        <div class="bracket bracket-tl"></div>
-        <div class="bracket bracket-tr"></div>
-        <div class="bracket bracket-bl"></div>
-        <div class="bracket bracket-br"></div>
-
-        <div id="pane-formal" class="response-pane active">
-          <div class="flex items-center justify-between mb-3">
-            <div class="mono" style="font-size:11px;color:var(--acid);">RESPONSE MODE: FORMAL</div>
-            <button class="copy-btn" onclick="copyText('formal')">⎘ COPY</button>
-          </div>
-          <div id="text-formal" class="response-content"></div>
-        </div>
-        <div id="pane-kind" class="response-pane">
-          <div class="flex items-center justify-between mb-3">
-            <div class="mono" style="font-size:11px;color:var(--acid);">RESPONSE MODE: KIND</div>
-            <button class="copy-btn" onclick="copyText('kind')">⎘ COPY</button>
-          </div>
-          <div id="text-kind" class="response-content"></div>
-        </div>
-        <div id="pane-strategic" class="response-pane">
-          <div class="flex items-center justify-between mb-3">
-            <div class="mono" style="font-size:11px;color:var(--acid);">RESPONSE MODE: STRATEGIC</div>
-            <button class="copy-btn" onclick="copyText('strategic')">⎘ COPY</button>
-          </div>
-          <div id="text-strategic" class="response-content"></div>
-        </div>
+        <div id="pane-formal" class="response-pane active"><div id="text-formal" class="leading-relaxed"></div></div>
+        <div id="pane-kind" class="response-pane"><div id="text-kind" class="leading-relaxed"></div></div>
+        <div id="pane-strategic" class="response-pane"><div id="text-strategic" class="leading-relaxed"></div></div>
+        <button class="copy-btn mt-4 text-acid text-xs font-mono border border-cyan-900 px-2 py-1" onclick="copyCurrent()">[ COPY RESPONSE ]</button>
       </div>
 
-      <!-- Value Box -->
       <div class="value-box mb-6">
-        <div class="flex items-start justify-between flex-wrap gap-4">
-          <div>
-            <div class="mono mb-1" style="font-size:11px;color:rgba(255,45,120,0.7);letter-spacing:0.12em;">ESTIMATED DAMAGE NEUTRALIZED</div>
-            <div class="value-number">$450</div>
-            <div style="font-size:13px;color:rgba(200,210,220,0.6);margin-top:4px;max-width:340px;">
-              = Avg. cost of 1 lost customer ($300) + PR agency consultation fees ($150). 
-              Paid by one response. Automated by <strong class="text-acid">ReviewAssassin Pro</strong>.
-            </div>
-          </div>
-          <div class="flex flex-col gap-2 text-right">
-            <div class="stat-pill"><strong id="reviewsSaved">1</strong>review processed</div>
-            <div class="stat-pill"><strong>∞</strong>with Pro plan</div>
-          </div>
-        </div>
+        <div class="mono text-[10px] text-pink-500 mb-1">REVENUE PROTECTED</div>
+        <div class="value-number">$450.00</div>
+        <p class="text-xs opacity-50 mt-2">Saved 1 customer + PR consultation fees.</p>
       </div>
-
-      <!-- CTA -->
-      <div id="cta" class="panel panel-accent2 p-7 relative overflow-hidden">
-        <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,45,120,0.12),transparent 70%);pointer-events:none;"></div>
-        <div class="bracket bracket-tl" style="border-color:var(--acid2);"></div>
-        <div class="bracket bracket-tr" style="border-color:var(--acid2);"></div>
-        <div class="bracket bracket-bl" style="border-color:var(--acid2);"></div>
-        <div class="bracket bracket-br" style="border-color:var(--acid2);"></div>
-        <div class="mono mb-2" style="font-size:11px;color:var(--acid2);letter-spacing:0.15em;">[ UPGRADE YOUR DEFENSE ]</div>
-        <h2 class="heading-main text-white mb-2" style="font-size:28px;">
-          Want AI to Automate <span style="color:var(--acid2)">All Your Reviews</span> 24/7?
-        </h2>
-        <p style="font-size:14px;color:rgba(180,200,220,0.65);max-width:480px;margin-bottom:20px;line-height:1.65;">
-          ReviewAssassin Pro monitors every platform, auto-drafts responses, and protects your brand while you sleep. Zero PR agency needed.
-        </p>
-        <div class="flex items-center gap-3 flex-wrap">
-          <a href="https://appsumo.com" target="_blank" class="btn-pro">
-            🔒 Unlock ReviewAssassin Pro via AppSumo
-          </a>
-          <div class="mono" style="font-size:11px;color:rgba(255,100,100,0.6);">⚡ Limited lifetime deal · No subscription</div>
-        </div>
-        <div class="flex items-center gap-4 mt-4 flex-wrap">
-          <span style="font-size:12px;color:rgba(150,190,210,0.5);">✓ Google Reviews</span>
-          <span style="font-size:12px;color:rgba(150,190,210,0.5);">✓ Trustpilot</span>
-          <span style="font-size:12px;color:rgba(150,190,210,0.5);">✓ Yelp</span>
-          <span style="font-size:12px;color:rgba(150,190,210,0.5);">✓ TripAdvisor</span>
-          <span style="font-size:12px;color:rgba(150,190,210,0.5);">✓ Amazon</span>
-        </div>
-      </div>
-
-    </div><!-- /results -->
-
-    <!-- Early Access Email Form -->
-    <div class="panel p-6 mt-8 fade-in delay-3">
-      <div class="bracket bracket-tl"></div>
-      <div class="bracket bracket-br"></div>
-      <div class="mono mb-1" style="font-size:11px;color:rgba(0,255,231,0.5);letter-spacing:0.12em;">[ SECURE EARLY ACCESS ]</div>
-      <div class="heading-main text-white mb-1" style="font-size:19px;">Get Notified When Pro Launches</div>
-      <p style="font-size:13px;color:rgba(170,200,220,0.55);margin-bottom:16px;">Join 1,400+ business owners on the waitlist. First 200 get 40% off.</p>
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="flex gap-3 flex-wrap">
-        <input type="email" name="email" placeholder="your@business.com" class="cyber-input flex-1" style="min-width:200px;" required />
-        <button type="submit" class="btn-assassin" style="padding:10px 24px;font-size:14px;">
-          → Get Early Access
-        </button>
-      </form>
     </div>
-
   </main>
-
-  <!-- ── FOOTER ─────────────────────────── -->
-  <footer style="border-top:1px solid var(--border);padding:20px 24px;text-align:center;">
-    <div class="mono" style="font-size:11px;color:rgba(0,255,231,0.25);letter-spacing:0.08em;">
-      REVIEWASSASSIN AI · PR DEFENSE SYSTEM · ALL BRAND DAMAGE NEUTRALIZED · 
-      <span style="color:rgba(255,45,120,0.35)">NOT AFFILIATED WITH REVIEW PLATFORMS</span>
-    </div>
-  </footer>
-
-</div><!-- /z-1 wrapper -->
+</div>
 
 <script>
-const GEMINI_API_KEY = 'AIzaSyBR65NRsEWi6J2iuH6KsiLBVdfa_e3n2QQ';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+const API_KEY = 'AIzaSyBR65NRsEWi6J2iuH6KsiLBVdfa_e3n2QQ';
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-const loadingMessages = [
-  'SCANNING FOR BRAND DAMAGE...',
-  'CONSULTING PR EXPERTS...',
-  'CRAFTING PERFECT RESPONSES...',
-  'NEUTRALIZING THREAT...',
-  'ARMING DEFENSE MATRIX...',
-];
-
-let currentTab = 'formal';
 let responses = { formal: '', kind: '', strategic: '' };
-let reviewCount = 0;
-
-// Char counter
-document.getElementById('reviewInput').addEventListener('input', function() {
-  document.getElementById('charCount').textContent = this.value.length + ' CHARACTERS';
-});
-
-function showLoading(show) {
-  document.getElementById('loading').style.display = show ? 'flex' : 'none';
-  document.getElementById('generateBtn').disabled = show;
-}
-
-function showError(msg) {
-  const el = document.getElementById('errorMsg');
-  document.getElementById('errorText').textContent = msg;
-  el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 6000);
-}
-
-function cycleLoadingText() {
-  let i = 0;
-  const el = document.getElementById('loadingText');
-  el.textContent = loadingMessages[0];
-  return setInterval(() => {
-    i = (i + 1) % loadingMessages.length;
-    el.textContent = loadingMessages[i];
-  }, 1600);
-}
+let currentTab = 'formal';
 
 function switchTab(tab, btn) {
   currentTab = tab;
@@ -607,135 +153,64 @@ function switchTab(tab, btn) {
   document.getElementById('pane-' + tab).classList.add('active');
 }
 
-function copyText(tab) {
-  const text = responses[tab];
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = '✓ COPIED';
-    btn.style.color = 'var(--acid3)';
-    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1800);
-  });
-}
-
-function parseResponses(raw) {
-  // Try to extract three sections by label
-  const result = { formal: '', kind: '', strategic: '' };
-  
-  const formalMatch = raw.match(/(?:formal[^:]*:|1\.\s*formal[^:]*:)([\s\S]*?)(?=(?:kind|2\.\s|strategic|$))/i);
-  const kindMatch   = raw.match(/(?:kind[^:]*:|2\.\s*kind[^:]*:)([\s\S]*?)(?=(?:strategic|3\.\s|formal|$))/i);
-  const stratMatch  = raw.match(/(?:strategic[^:]*:|3\.\s*strategic[^:]*:)([\s\S]*?)(?=(?:formal|kind|$))/i);
-
-  if (formalMatch) result.formal = formalMatch[1].trim();
-  if (kindMatch)   result.kind   = kindMatch[1].trim();
-  if (stratMatch)  result.strategic = stratMatch[1].trim();
-
-  // Fallback: split by numbered sections
-  if (!result.formal && !result.kind && !result.strategic) {
-    const parts = raw.split(/\n(?:\d+\.|#+\s)/);
-    result.formal     = parts[1]?.trim() || raw;
-    result.kind       = parts[2]?.trim() || raw;
-    result.strategic  = parts[3]?.trim() || raw;
-  }
-
-  return result;
-}
-
-function renderResponses() {
-  ['formal', 'kind', 'strategic'].forEach(tab => {
-    const el = document.getElementById('text-' + tab);
-    // Convert line breaks to paragraphs
-    const html = responses[tab]
-      .split(/\n\n+/)
-      .map(p => `<p style="margin-bottom:12px">${p.replace(/\n/g,'<br>')}</p>`)
-      .join('');
-    el.innerHTML = html || '<p style="color:rgba(200,210,220,0.4);font-style:italic;">No response generated for this mode.</p>';
-  });
+function copyCurrent() {
+  navigator.clipboard.writeText(responses[currentTab]);
+  alert('Copied to clipboard!');
 }
 
 async function generateResponses() {
-  const review = document.getElementById('reviewInput').value.trim();
-  if (!review) {
-    showError('Please paste a customer review first.');
-    return;
-  }
+  const input = document.getElementById('reviewInput').value.trim();
+  if(!input) return alert('Paste a review first!');
 
-  document.getElementById('errorMsg').style.display = 'none';
-  document.getElementById('results').classList.remove('visible');
-  showLoading(true);
-  const interval = cycleLoadingText();
+  const btn = document.getElementById('generateBtn');
+  const loading = document.getElementById('loading');
+  const results = document.getElementById('results');
+  const errorBox = document.getElementById('errorMsg');
 
-  const prompt = `You are a world-class PR manager and reputation specialist. Analyze this negative customer review and write exactly 3 distinct, professional responses. Use the reviewer's name if available. Your goal is to turn a hater into a fan.
+  btn.disabled = true;
+  loading.style.display = 'flex';
+  results.style.display = 'none';
+  errorBox.style.display = 'none';
 
-NEGATIVE REVIEW:
-"${review}"
-
----
-
-Respond in EXACTLY this format:
-
-**FORMAL RESPONSE:**
-[Write a formal, professional response here. 3-4 sentences.]
-
-**KIND RESPONSE:**
-[Write a warm, empathetic, human response here. 3-4 sentences.]
-
-**STRATEGIC RESPONSE:**
-[Write a strategically crafted response that addresses the issue, offers a solution, and subtly highlights your brand's strengths. 4-5 sentences.]
-
-Use the customer's first name if you can identify it. Do not include any other commentary outside of these three responses.`;
+  const prompt = `You are a PR expert. Write 3 responses to this negative review: "${input}". 
+  Format your answer exactly like this:
+  FORMAL: [response]
+  KIND: [response]
+  STRATEGIC: [response]`;
 
   try {
-    const res = await fetch(GEMINI_URL, {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 1000 }
+        contents: [{ parts: [{ text: prompt }] }]
       })
     });
 
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err?.error?.message || 'API error ' + res.status);
-    }
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || 'API Error');
 
-    const data = await res.json();
-    const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const text = data.candidates[0].content.parts[0].text;
     
-    if (!raw) throw new Error('No response received from AI.');
+    // Improved parsing
+    responses.formal = text.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.trim() || "Error generating formal response.";
+    responses.kind = text.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.trim() || "Error generating kind response.";
+    responses.strategic = text.match(/STRATEGIC:(.*?)$/s)?.[1]?.trim() || "Error generating strategic response.";
 
-    responses = parseResponses(raw);
-    
-    // If parsing fails gracefully, put raw in formal
-    if (!responses.formal && !responses.kind && !responses.strategic) {
-      responses.formal = raw;
-      responses.kind = raw;
-      responses.strategic = raw;
-    }
+    document.getElementById('text-formal').innerText = responses.formal;
+    document.getElementById('text-kind').innerText = responses.kind;
+    document.getElementById('text-strategic').innerText = responses.strategic;
 
-    renderResponses();
-    reviewCount++;
-    document.getElementById('reviewsSaved').textContent = reviewCount;
-
-    clearInterval(interval);
-    showLoading(false);
-    document.getElementById('results').classList.add('visible');
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+    results.style.display = 'block';
   } catch (err) {
-    clearInterval(interval);
-    showLoading(false);
-    showError('Error: ' + (err.message || 'Failed to connect to AI. Check your API key and internet connection.'));
     console.error(err);
+    document.getElementById('errorText').innerText = err.message;
+    errorBox.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    loading.style.display = 'none';
   }
 }
-
-// Allow Enter key to trigger (Ctrl+Enter)
-document.getElementById('reviewInput').addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.key === 'Enter') generateResponses();
-});
 </script>
 </body>
 </html>
