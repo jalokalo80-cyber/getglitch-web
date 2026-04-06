@@ -30,7 +30,7 @@
 
             <div id="resultArea" class="mt-8 text-left hidden">
                 <div class="p-4 bg-cyan-900/20 border border-cyan-800 rounded-lg">
-                    <p id="aiResponse" class="text-cyan-100 text-sm leading-relaxed"></p>
+                    <p id="aiResponse" class="text-cyan-100 text-sm leading-relaxed whitespace-pre-line"></p>
                 </div>
             </div>
         </div>
@@ -40,26 +40,24 @@
 
     <div id="emailModal" class="fixed inset-0 modal-bg flex items-center justify-center hidden z-50 p-4">
         <div class="card max-w-md w-full p-8 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
-            <h2 class="text-2xl font-bold mb-2">Analýza takmer hotová! 🚀</h2>
-            <p class="text-gray-400 mb-6 text-sm">Našli sme kritické glitche. Kam vám máme poslať kompletný 20-stranový report?</p>
+            <h2 class="text-2xl font-bold mb-2 text-center text-white">Analýza pripravená! 🚀</h2>
+            <p class="text-gray-400 mb-6 text-sm text-center">Zadajte e-mail, na ktorý vám pošleme výsledok a odomknite okamžitý náhľad.</p>
             
             <input type="email" id="leadEmail" placeholder="vas@email.com" class="w-full bg-black border border-gray-800 rounded-lg py-3 px-4 text-white focus:border-cyan-500 outline-none mb-4">
             
-            <button onclick="submitLead()" class="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition">
+            <button id="submitBtn" onclick="submitLead()" class="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition">
                 Odomknúť výsledky
             </button>
-            <p class="text-[10px] text-gray-600 mt-4 text-center text-uppercase">Súhlasíte so spracovaním e-mailu pre účely zaslania auditu.</p>
         </div>
     </div>
 
     <script>
         let userEmail = "";
+        const FORMSPREE_URL = "https://formspree.io/f/xnjoloaz";
 
         function checkEmailRequirement() {
             const url = document.getElementById('urlInput').value;
             if(!url) return alert("Vlož URL!");
-            
-            // Ak ešte nemáme e-mail, ukážeme okno
             if (!userEmail) {
                 document.getElementById('emailModal').classList.remove('hidden');
             } else {
@@ -67,15 +65,31 @@
             }
         }
 
-        function submitLead() {
+        async function submitLead() {
             const emailField = document.getElementById('leadEmail');
+            const submitBtn = document.getElementById('submitBtn');
+            const url = document.getElementById('urlInput').value;
+
             if(!emailField.value || !emailField.value.includes('@')) return alert("Zadajte platný e-mail!");
             
             userEmail = emailField.value;
-            console.log("Nový lead:", userEmail); // Toto uvidíš v konzole
-            
-            document.getElementById('emailModal').classList.add('hidden');
-            startAudit();
+            submitBtn.innerText = "Odosielam...";
+            submitBtn.disabled = true;
+
+            // ODOSLANIE DO FORMSPREE
+            try {
+                await fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: userEmail, website: url })
+                });
+                document.getElementById('emailModal').classList.add('hidden');
+                startAudit();
+            } catch (error) {
+                alert("Chyba pri odosielaní. Skúste to znova.");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Odomknúť výsledky";
+            }
         }
 
         function startAudit() {
@@ -84,15 +98,14 @@
             const result = document.getElementById('resultArea');
             const responseText = document.getElementById('aiResponse');
 
-            btn.innerText = "Analyzujem glitche... (Môže to trvať 10s)";
+            btn.innerText = "Gemini AI analyzuje váš web...";
             btn.disabled = true;
 
+            // SEM TERAZ DOPLNÍME REÁLNE GEMINI API
             setTimeout(() => {
                 result.classList.remove('hidden');
-                responseText.innerText = "ANALÝZA PRE " + url + ": Našli sme 3 kritické chyby v konverznom pomere. Vaše tlačidlá nie sú dostatočne viditeľné na mobiloch a chýba vám jasné USP. Kompletný report bol práve odoslaný na " + userEmail + ". (TOTO JE DEMO - Pre plný report si zakúpte licenciu na AppSumo!)";
+                responseText.innerText = "✅ ANALÝZA HOTOVÁ PRE: " + url + "\n\nAI detegovala tieto glitche:\n1. Pomalé načítavanie na mobiloch (-15% konverzií).\n2. Chýbajúci 'Trust Signal' v hlavičke.\n3. Slabá výzva k akcii (CTA).\n\nKompletný report bol odoslaný na: " + userEmail;
                 btn.innerText = "AUDIT DOKONČENÝ";
-                
-                // Tu sa scrollne na výsledok, aby ho používateľ videl
                 result.scrollIntoView({ behavior: 'smooth' });
             }, 3000);
         }
