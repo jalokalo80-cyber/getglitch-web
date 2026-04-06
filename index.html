@@ -1,204 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ReviewAssassin AI — Neutralize Negative Reviews</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;700;900&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  :root {
-    --acid: #00ffe7;
-    --acid2: #ff2d78;
-    --acid3: #ffe600;
-    --bg: #050810;
-    --bg2: #0a0f1e;
-    --border: rgba(0,255,231,0.18);
-    --glass: rgba(10,15,30,0.85);
-    --glow: 0 0 24px rgba(0,255,231,0.22), 0 0 2px rgba(0,255,231,0.7);
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: #c8d6e8;
-    font-family: 'Exo 2', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: repeating-linear-gradient(0deg, rgba(0,255,231,0.02) 0px, rgba(0,255,231,0.02) 1px, transparent 1px, transparent 3px);
-  }
-  .bracket { position: absolute; width: 15px; height: 15px; border-color: var(--acid); border-style: solid; opacity: 0.6; }
-  .bracket-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
-  .bracket-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
-  .bracket-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
-  .bracket-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
-  .hero-glow { position: absolute; width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(0,255,231,0.1) 0%, transparent 70%); top: -50px; left: 50%; transform: translateX(-50%); pointer-events: none; }
-  .logo-icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1.5px solid var(--acid); box-shadow: var(--glow); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); background: rgba(0,255,231,0.07); font-size: 20px; }
-  .panel { background: var(--glass); border: 1px solid var(--border); border-radius: 4px; position: relative; backdrop-filter: blur(10px); }
-  .panel-accent { border-top: 2px solid var(--acid); }
-  .cyber-textarea { width: 100%; background: rgba(0,255,231,0.03); border: 1px solid rgba(0,255,231,0.2); border-radius: 3px; color: #fff; padding: 15px; outline: none; transition: 0.2s; }
-  .cyber-textarea:focus { border-color: var(--acid); box-shadow: 0 0 15px rgba(0,255,231,0.15); }
-  .btn-assassin { background: transparent; border: 1.5px solid var(--acid); color: var(--acid); font-family: 'Rajdhani', sans-serif; font-weight: 700; padding: 12px 30px; cursor: pointer; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); transition: 0.2s; text-transform: uppercase; box-shadow: var(--glow); }
-  .btn-assassin:hover { background: rgba(0,255,231,0.1); box-shadow: 0 0 30px rgba(0,255,231,0.3); }
-  .btn-assassin:disabled { opacity: 0.4; cursor: not-allowed; }
-  .tab-btn { font-family: 'Rajdhani', sans-serif; font-weight: 600; padding: 6px 18px; border: 1px solid rgba(0,255,231,0.15); color: rgba(150,200,220,0.5); cursor: pointer; transition: 0.2s; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); }
-  .tab-btn.active { background: rgba(0,255,231,0.1); color: var(--acid); border-color: var(--acid); box-shadow: var(--glow); }
-  .response-pane { display: none; }
-  .response-pane.active { display: block; animation: fadeIn 0.3s ease; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .value-box { background: linear-gradient(135deg, rgba(255,45,120,0.08) 0%, rgba(0,255,231,0.04) 100%); border: 1px solid rgba(255,45,120,0.25); border-left: 3px solid var(--acid2); padding: 15px 20px; border-radius: 3px; }
-  .btn-pro { background: linear-gradient(90deg, var(--acid2), #ff6a00); color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; padding: 12px 30px; border: none; clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%); text-transform: uppercase; text-decoration: none; display: inline-block; box-shadow: 0 0 20px rgba(255,45,120,0.3); }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReviewAssassin AI — Neutralize Negative Reviews</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@600;700&family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --acid: #00ffe7;
+            --acid-dim: rgba(0, 255, 231, 0.15);
+            --pink: #ff2d78;
+            --bg: #050810;
+            --panel: rgba(10, 15, 30, 0.9);
+        }
+        body {
+            background-color: var(--bg);
+            color: #c8d6e8;
+            font-family: 'Exo 2', sans-serif;
+            background-image: radial-gradient(circle at 50% 30%, #101a35 0%, var(--bg) 70%);
+            min-height: 100vh;
+        }
+        .cyber-border {
+            border: 1px solid var(--acid-dim);
+            position: relative;
+            background: var(--panel);
+            backdrop-filter: blur(10px);
+        }
+        .cyber-border::before {
+            content: ""; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px;
+            border-top: 2px solid var(--acid); border-left: 2px solid var(--acid);
+        }
+        .cyber-border::after {
+            content: ""; position: absolute; bottom: -1px; right: -1px; width: 10px; height: 10px;
+            border-bottom: 2px solid var(--acid); border-right: 2px solid var(--acid);
+        }
+        .btn-assassin {
+            background: transparent;
+            border: 1px solid var(--acid);
+            color: var(--acid);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            padding: 12px 30px;
+        }
+        .btn-assassin:hover:not(:disabled) {
+            background: var(--acid-dim);
+            box-shadow: 0 0 20px var(--acid-dim);
+            transform: scale(1.05);
+        }
+        .tab-btn {
+            font-family: 'Share Tech Mono', monospace;
+            padding: 8px 16px;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+            color: #666;
+        }
+        .tab-btn.active {
+            color: var(--acid);
+            border-bottom: 2px solid var(--acid);
+            text-shadow: 0 0 10px var(--acid-dim);
+        }
+        .response-pane { display: none; animation: fadeIn 0.4s ease-out; }
+        .response-pane.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .glitch-text { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; }
+        textarea { background: rgba(0,0,0,0.3) !important; border: 1px solid var(--acid-dim) !important; color: white !important; }
+        textarea:focus { border-color: var(--acid) !important; outline: none; }
+    </style>
 </head>
-<body>
+<body class="p-4 md:p-10">
 
-<div class="relative z-10 min-h-screen">
-  <nav class="sticky top-0 z-50 px-6 py-3 flex items-center justify-between border-b border-[var(--border)] bg-[rgba(5,8,16,0.9)] backdrop-blur-md">
-    <div class="flex items-center gap-3">
-      <div class="logo-icon">🗡️</div>
-      <div>
-        <div class="font-bold text-white tracking-wider text-lg">Review<span class="text-[#00ffe7]">Assassin</span> AI</div>
-        <div class="text-[10px] font-mono text-[#00ffe7] opacity-60 uppercase tracking-widest">PR Defense System v2.5</div>
-      </div>
+    <div class="max-w-3xl mx-auto">
+        <header class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 border border-[var(--acid)] flex items-center justify-center text-xl shadow-[0_0_15px_var(--acid-dim)]">🗡️</div>
+                <div>
+                    <h1 class="glitch-text text-2xl font-bold tracking-tighter text-white">Review<span class="text-[var(--acid)]">Assassin</span></h1>
+                    <p class="text-[10px] font-mono text-[var(--acid)] opacity-70 tracking-[0.2em]">PR DEFENSE PROTOCOL v2.6</p>
+                </div>
+            </div>
+            <div class="hidden md:block text-[10px] font-mono text-right opacity-50">
+                STATUS: SYSTEM ONLINE<br>ENCRYPTION: ACTIVE
+            </div>
+        </header>
+
+        <div class="cyber-border p-6 mb-8">
+            <label class="block font-mono text-[10px] text-[var(--acid)] mb-2 uppercase tracking-widest">Target Review Data:</label>
+            <textarea id="reviewInput" class="w-full h-40 p-4 rounded-sm font-light text-sm" placeholder="Sem vlož negatívnu recenziu, ktorú potrebuješ zneutralizovať..."></textarea>
+            
+            <div class="flex justify-between items-center mt-6">
+                <div id="loading" class="hidden items-center gap-3">
+                    <div class="w-4 h-4 border-2 border-[var(--acid)] border-t-transparent animate-spin rounded-full"></div>
+                    <span class="font-mono text-[10px] text-[var(--acid)] animate-pulse uppercase">Spracovávam protokoly...</span>
+                </div>
+                <div id="spacer"></div>
+                <button id="generateBtn" onclick="generateResponses()" class="btn-assassin">⚡ Spustiť analýzu</button>
+            </div>
+        </div>
+
+        <div id="errorMsg" class="hidden mb-6 p-4 border border-[var(--pink)] bg-[rgba(255,45,120,0.1)] text-[var(--pink)] text-xs font-mono">
+            [!] ERROR: <span id="errorText"></span>
+        </div>
+
+        <div id="results" class="hidden">
+            <div class="flex gap-4 mb-4 border-b border-[var(--acid-dim)]">
+                <button class="tab-btn active" onclick="switchTab('formal', this)">FORMAL</button>
+                <button class="tab-btn" onclick="switchTab('kind', this)">KIND</button>
+                <button class="tab-btn" onclick="switchTab('strategic', this)">STRATEGIC</button>
+            </div>
+
+            <div class="cyber-border p-8 min-h-[200px]">
+                <div id="pane-formal" class="response-pane active">
+                    <p id="text-formal" class="text-sm leading-relaxed text-blue-50"></p>
+                </div>
+                <div id="pane-kind" class="response-pane">
+                    <p id="text-kind" class="text-sm leading-relaxed text-blue-50"></p>
+                </div>
+                <div id="pane-strategic" class="response-pane">
+                    <p id="text-strategic" class="text-sm leading-relaxed text-blue-50"></p>
+                </div>
+                
+                <button onclick="copyCurrent()" class="mt-8 text-[10px] font-mono text-[var(--acid)] border border-[var(--acid-dim)] px-3 py-1 hover:bg-[var(--acid-dim)] transition">
+                    [ KOPÍROVAŤ ODPOVEĎ ]
+                </button>
+            </div>
+
+            <div class="mt-6 flex items-center gap-4">
+                <div class="flex-1 h-[1px] bg-[var(--acid-dim)]"></div>
+                <div class="font-mono text-[10px] text-yellow-500">SAVED BRAND VALUE: $450.00</div>
+                <div class="flex-1 h-[1px] bg-[var(--acid-dim)]"></div>
+            </div>
+        </div>
     </div>
-    <a href="https://appsumo.com" target="_blank" class="btn-pro text-xs">Go Pro →</a>
-  </nav>
 
-  <section class="relative px-6 pt-12 pb-8 text-center max-w-4xl mx-auto">
-    <div class="hero-glow"></div>
-    <h1 class="text-white font-bold text-4xl md:text-6xl mb-4 leading-tight" style="font-family:'Rajdhani', sans-serif;">
-      Neutralize Every <span class="text-[#00ffe7]">Bad Review</span>
-    </h1>
-    <p class="text-[rgba(180,210,230,0.7)] text-sm md:text-base max-w-xl mx-auto">
-      Don't let one hater ruin your business. Get 3 expert PR responses to fix the damage in 1 second.
-    </p>
-  </section>
+    <script>
+        // --- KONFIGURÁCIA ---
+        const API_KEY = 'AIzaSyAESi5P01x2G1vqHFC3m--GLw5fXxhronk'; // SEM VLOŽ SVOJ KĽÚČ
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-  <main class="max-w-2xl mx-auto px-6 pb-20">
-    <div class="panel panel-accent p-6 mb-6">
-      <div class="bracket bracket-tl"></div><div class="bracket bracket-tr"></div><div class="bracket bracket-bl"></div><div class="bracket bracket-br"></div>
-      <div class="text-[10px] font-mono text-[#00ffe7] mb-3 opacity-80">[ INPUT TARGET DATA ]</div>
-      <textarea id="reviewInput" class="cyber-textarea" rows="5" placeholder="Paste the negative review here..."></textarea>
-      <div class="flex justify-end mt-4">
-        <button id="generateBtn" class="btn-assassin" onclick="generateResponses()">⚡ Neutralize Now</button>
-      </div>
-    </div>
+        let responses = { formal: '', kind: '', strategic: '' };
+        let currentTab = 'formal';
 
-    <div id="errorMsg" class="hidden mb-6 p-4 bg-red-900/20 border border-red-500 text-red-400 text-xs font-mono rounded">
-      ⚠ Error: <span id="errorText"></span>
-    </div>
+        function switchTab(tab, btn) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.response-pane').forEach(p => p.classList.remove('active'));
+            document.getElementById('pane-' + tab).classList.add('active');
+        }
 
-    <div id="loading" class="hidden flex-col items-center py-10">
-      <div class="text-[#00ffe7] font-mono text-sm animate-pulse">RECALIBRATING BRAND REPUTATION...</div>
-      <div class="w-48 h-1 bg-white/10 mt-4 overflow-hidden rounded-full">
-        <div class="h-full bg-[#00ffe7] w-1/2 animate-[slide_1.5s_infinite_linear]"></div>
-      </div>
-    </div>
-    <style> @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(200%); } } </style>
+        function copyCurrent() {
+            const text = responses[currentTab];
+            if(!text) return;
+            navigator.clipboard.writeText(text);
+            alert("Skopírované do schránky!");
+        }
 
-    <div id="results" class="hidden">
-      <div class="flex gap-2 mb-4">
-        <button class="tab-btn active" onclick="switchTab('formal', this)">Formal</button>
-        <button class="tab-btn" onclick="switchTab('kind', this)">Kind</button>
-        <button class="tab-btn" onclick="switchTab('strategic', this)">Strategic</button>
-      </div>
+        async function generateResponses() {
+            const input = document.getElementById('reviewInput').value.trim();
+            if(!input) return alert("Vlož text recenzie!");
 
-      <div class="panel p-6 mb-6">
-        <div class="bracket bracket-tl"></div><div class="bracket bracket-tr"></div><div class="bracket bracket-bl"></div><div class="bracket bracket-br"></div>
-        <div id="pane-formal" class="response-pane active"><div id="text-formal" class="text-sm leading-relaxed text-blue-50"></div></div>
-        <div id="pane-kind" class="response-pane"><div id="text-kind" class="text-sm leading-relaxed text-blue-50"></div></div>
-        <div id="pane-strategic" class="response-pane"><div id="text-strategic" class="text-sm leading-relaxed text-blue-50"></div></div>
-        <button class="mt-6 text-[10px] font-mono text-[#00ffe7] border border-[#00ffe7]/30 px-3 py-1 hover:bg-[#00ffe7]/10 transition" onclick="copyCurrent()">[ COPY TO CLIPBOARD ]</button>
-      </div>
+            const btn = document.getElementById('generateBtn');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            const errorBox = document.getElementById('errorMsg');
 
-      <div class="value-box">
-        <div class="text-[10px] font-mono text-pink-500 mb-1 tracking-widest">DAMAGE NEUTRALIZED:</div>
-        <div class="text-3xl font-bold text-yellow-400" style="font-family:'Rajdhani', sans-serif;">$450.00 USD</div>
-        <p class="text-[10px] opacity-60 mt-1">Estimated savings: 1 Customer Retention + PR Consultation fee.</p>
-      </div>
-    </div>
-  </main>
-</div>
+            // UI Reset
+            btn.disabled = true;
+            loading.classList.remove('hidden');
+            loading.classList.add('flex');
+            results.classList.add('hidden');
+            errorBox.classList.add('hidden');
 
-<script>
-// POUŽÍVAME STABILNÚ VERZIU V1
-const API_KEY = 'AIzaSyBR65NRsEWi6J2iuH6KsiLBVdfa_e3n2QQ';
-const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+            const prompt = `Si expert na PR a zákaznícky servis. Napíš 3 rôzne odpovede v slovenčine na túto negatívnu recenziu: "${input}". 
+            Odpovede musia byť v tomto formáte (nepoužívaj hviezdičky):
+            FORMAL: [Profesionálna a úctivá odpoveď]
+            KIND: [Empatická a veľmi milá odpoveď]
+            STRATEGIC: [Odpoveď zameraná na vyriešenie problému a ochranu mena firmy]`;
 
-let responses = { formal: '', kind: '', strategic: '' };
-let currentTab = 'formal';
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
 
-function switchTab(tab, btn) {
-  currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.response-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('pane-' + tab).classList.add('active');
-}
+                const data = await res.json();
 
-function copyCurrent() {
-  if(!responses[currentTab]) return;
-  navigator.clipboard.writeText(responses[currentTab]);
-  alert('Response copied!');
-}
+                if (data.error) throw new Error(data.error.message);
 
-async function generateResponses() {
-  const input = document.getElementById('reviewInput').value.trim();
-  if(!input) return;
+                const rawText = data.candidates[0].content.parts[0].text;
 
-  const btn = document.getElementById('generateBtn');
-  const loading = document.getElementById('loading');
-  const results = document.getElementById('results');
-  const errorBox = document.getElementById('errorMsg');
+                // Parsovanie výsledkov pomocou Regexu
+                responses.formal = rawText.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.trim() || "Chyba pri generovaní.";
+                responses.kind = rawText.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.trim() || "Chyba pri generovaní.";
+                responses.strategic = rawText.match(/STRATEGIC:(.*?)$/s)?.[1]?.trim() || "Chyba pri generovaní.";
 
-  btn.disabled = true;
-  loading.classList.remove('hidden');
-  results.classList.add('hidden');
-  errorBox.classList.add('hidden');
+                // Čistenie od prípadných zvyšných značiek
+                Object.keys(responses).forEach(key => {
+                    responses[key] = responses[key].replace(/\*/g, '');
+                });
 
-  // Precízny prompt pre lepšie parsovanie
-  const prompt = `Act as a PR Expert. Provide 3 different responses to this customer review: "${input}". 
-  Format your answer exactly as:
-  FORMAL: [response]
-  KIND: [response]
-  STRATEGIC: [response]`;
+                document.getElementById('text-formal').innerText = responses.formal;
+                document.getElementById('text-kind').innerText = responses.kind;
+                document.getElementById('text-strategic').innerText = responses.strategic;
 
-  try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
-      })
-    });
-
-    const data = await res.json();
-    if (data.error) throw new Error(data.error.message);
-
-    const rawText = data.candidates[0].content.parts[0].text;
-    
-    // Čistenie a parsovanie textu (odstráni prebytočné hviezdičky a pod.)
-    responses.formal = rawText.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Error drafting formal response.";
-    responses.kind = rawText.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Error drafting kind response.";
-    responses.strategic = rawText.match(/STRATEGIC:(.*?)$/s)?.[1]?.replace(/\*/g, '').trim() || "Error drafting strategic response.";
-
-    document.getElementById('text-formal').innerText = responses.formal;
-    document.getElementById('text-kind').innerText = responses.kind;
-    document.getElementById('text-strategic').innerText = responses.strategic;
-
-    results.classList.remove('hidden');
-  } catch (err) {
-    document.getElementById('errorText').innerText = err.message;
-    errorBox.classList.remove('hidden');
-    console.error("AI FAIL:", err);
-  } finally {
-    btn.disabled = false;
-    loading.classList.add('hidden');
-  }
-}
-</script>
+                results.classList.remove('hidden');
+            } catch (err) {
+                console.error(err);
+                document.getElementById('errorText').innerText = err.message;
+                errorBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                loading.classList.add('hidden');
+                loading.classList.remove('flex');
+            }
+        }
+    </script>
 </body>
 </html>
