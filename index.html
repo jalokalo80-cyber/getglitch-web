@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlitchFinder AI | Odhaľte chyby vo vašom biznise</title>
+    <title>GlitchFinder AI | Find Business Gaps Instantly</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #0a0a0a; color: white; font-family: 'Inter', sans-serif; }
@@ -18,33 +18,33 @@
 
     <div class="max-w-3xl w-full text-center">
         <div class="inline-block bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 px-3 py-1 rounded-full text-xs font-bold mb-4 uppercase tracking-widest">
-            AKCIA: Prvý audit máte dnes úplne ZADARMO
+            OFFER: Your first audit is FREE today
         </div>
         
         <h1 class="text-5xl font-bold mb-4 tracking-tight leading-tight">Find the <span class="gradient-text">Glitch</span> in your Business.</h1>
-        <p class="text-gray-400 text-xl mb-10">Získajte okamžitú AI analýzu vášho webu a nájdite chyby, ktoré vás stoja zákazníkov.</p>
+        <p class="text-gray-400 text-xl mb-10">Get an instant AI analysis of your website and find glitches costing you customers.</p>
 
         <div class="card p-8 shadow-2xl relative overflow-hidden">
             <div class="mb-6 text-left">
-                <label class="block text-sm font-medium text-gray-500 mb-2 uppercase">URL vášho webu</label>
-                <input type="text" id="urlInput" placeholder="https://tvojweb.sk" class="w-full bg-black border border-gray-800 rounded-lg py-3 px-4 text-white focus:border-cyan-500 outline-none transition text-lg">
+                <label class="block text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">Website URL</label>
+                <input type="text" id="urlInput" placeholder="https://yourwebsite.com" class="w-full bg-black border border-gray-800 rounded-lg py-3 px-4 text-white focus:border-cyan-500 outline-none transition text-lg">
             </div>
             
-            <button onclick="checkEmailRequirement()" id="auditBtn" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-5 rounded-lg transition transform hover:scale-[1.01] text-lg shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-                ZÍSKAŤ AUDIT ZADARMO
+            <button onclick="checkEmailRequirement()" id="auditBtn" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-5 rounded-lg transition transform hover:scale-[1.01] text-lg shadow-[0_0_20px_rgba(6,182,212,0.3)] uppercase">
+                Get Free Audit
             </button>
 
-            <div id="resultArea" class="mt-8 text-left hidden border-t border-gray-800 pt-8">
+            <div id="resultArea" class="mt-8 text-left hidden border-t border-gray-800 pt-8 text-white">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-cyan-500 font-bold text-sm uppercase tracking-widest">Výsledok AI analýzy:</h3>
-                    <span class="text-[10px] bg-gray-800 text-gray-400 px-2 py-1 rounded uppercase">Glitch Engine v1.0</span>
+                    <h3 class="text-cyan-500 font-bold text-sm uppercase tracking-widest">AI Audit Result:</h3>
+                    <span class="text-[10px] bg-gray-800 text-gray-400 px-2 py-1 rounded uppercase">Glitch Engine v1.1</span>
                 </div>
                 <div class="p-6 bg-cyan-900/10 border border-cyan-800/30 rounded-xl">
                     <p id="aiResponse" class="text-cyan-50 text-sm leading-relaxed whitespace-pre-line"></p>
                 </div>
                 <div class="mt-6 p-4 border border-yellow-500/20 bg-yellow-500/5 rounded-lg text-center">
-                    <p class="text-yellow-200 text-xs font-medium">Chcete hĺbkovú analýzu (20+ strán) a konkrétny návod na nápravu?</p>
-                    <button class="mt-2 text-yellow-500 text-sm font-bold underline hover:text-yellow-400">Aktivujte si plnú verziu cez AppSumo</button>
+                    <p class="text-yellow-200 text-xs font-medium">Want a deep-dive report (20+ pages) and a fix-it guide?</p>
+                    <button class="mt-2 text-yellow-500 text-sm font-bold underline hover:text-yellow-400">Unlock Full Version via AppSumo</button>
                 </div>
             </div>
         </div>
@@ -56,16 +56,16 @@
         <div class="card max-w-md w-full p-10 border-cyan-500/50 shadow-[0_0_50px_rgba(6,182,212,0.2)]">
             <div class="text-center mb-6">
                 <div class="text-4xl mb-4">🎁</div>
-                <h2 class="text-2xl font-bold mb-2">Váš audit je pripravený!</h2>
-                <p class="text-gray-400 text-sm">Zadajte e-mail, na ktorý vám pošleme výsledok a okamžite si ho prečítajte.</p>
+                <h2 class="text-2xl font-bold mb-2">Your audit is ready!</h2>
+                <p class="text-gray-400 text-sm">Where should we send the full report? Enter your email to unlock instant results.</p>
             </div>
             
-            <input type="email" id="leadEmail" placeholder="vas@email.com" class="w-full bg-black border border-gray-800 rounded-lg py-4 px-4 text-white focus:border-cyan-500 outline-none mb-4 text-center">
+            <input type="email" id="leadEmail" placeholder="your@email.com" class="w-full bg-black border border-gray-800 rounded-lg py-4 px-4 text-white focus:border-cyan-500 outline-none mb-4 text-center">
             
             <button id="submitBtn" onclick="submitLead()" class="w-full bg-white text-black font-bold py-4 rounded-lg hover:bg-gray-200 transition uppercase tracking-wider">
-                Odomknúť výsledky zadarmo
+                Unlock Results Free
             </button>
-            <p class="text-[10px] text-gray-600 mt-6 text-center">Rešpektujeme vaše súkromie. Žiaden spam.</p>
+            <p class="text-[10px] text-gray-600 mt-6 text-center italic">We respect your privacy. No spam, ever.</p>
         </div>
     </div>
 
@@ -76,8 +76,7 @@
 
         function checkEmailRequirement() {
             const url = document.getElementById('urlInput').value;
-            if(!url) return alert("Vložte URL vášho webu!");
-            
+            if(!url) return alert("Please enter your website URL!");
             if (!userEmail) {
                 document.getElementById('emailModal').classList.remove('hidden');
             } else {
@@ -90,21 +89,22 @@
             const submitBtn = document.getElementById('submitBtn');
             const url = document.getElementById('urlInput').value;
 
-            if(!emailField.value || !emailField.value.includes('@')) return alert("Zadajte platný e-mail!");
+            if(!emailField.value || !emailField.value.includes('@')) return alert("Please enter a valid email!");
             
             userEmail = emailField.value;
-            submitBtn.innerHTML = '<span class="loading-spinner"></span> ODOMYKÁM...';
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> UNLOCKING...';
             submitBtn.disabled = true;
 
             try {
                 await fetch(FORMSPREE_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                     body: JSON.stringify({ email: userEmail, website: url })
                 });
                 document.getElementById('emailModal').classList.add('hidden');
                 startRealAudit();
             } catch (e) {
+                console.error("Email error:", e);
                 document.getElementById('emailModal').classList.add('hidden');
                 startRealAudit(); 
             }
@@ -116,16 +116,15 @@
             const result = document.getElementById('resultArea');
             const responseText = document.getElementById('aiResponse');
 
-            btn.innerHTML = '<span class="loading-spinner"></span> Gemini AI vykonáva bezplatný audit...';
+            btn.innerHTML = '<span class="loading-spinner"></span> Gemini AI is finding glitches...';
             btn.disabled = true;
             result.classList.add('hidden');
 
-            const prompt = `Si špičkový biznis konzultant a expert na konverzný pomer. 
-            Práve robíš audit pre web: ${url}. 
-            Napíš tri najväčšie chyby (glitche), ktoré bránia predaju. 
-            Buď úprimný a priamy. Potom napíš krátky akčný plán na nápravu.
-            Odpovedaj v slovenčine, prehľadne a profesionálne. 
-            Na konci pripomeň, že kompletný report bol odoslaný na ${userEmail}.`;
+            const prompt = `You are a world-class Conversion Rate Optimization (CRO) expert. 
+            Perform a quick audit for this website: ${url}. 
+            Identify 3 major glitches or errors that are likely causing a loss of revenue. 
+            Be direct, professional, and slightly witty. Provide a short action plan. 
+            Write in English. End by saying that the full 20-page report has been sent to ${userEmail}.`;
 
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
@@ -134,18 +133,22 @@
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
 
+                if (!response.ok) throw new Error("API Limit reached or invalid key.");
+
                 const data = await response.json();
                 const aiText = data.candidates[0].content.parts[0].text;
 
                 result.classList.remove('hidden');
                 responseText.innerText = aiText;
-                btn.innerText = "Audit dokončený";
+                btn.innerText = "AUDIT COMPLETED";
                 result.scrollIntoView({ behavior: 'smooth' });
 
             } catch (error) {
-                responseText.innerText = "Prepáčte, AI je momentálne preťažená. Skúste to o chvíľu.";
-                btn.innerText = "SKÚSIŤ ZNOVA";
+                console.error("AI Error:", error);
+                responseText.innerText = "The AI is currently under heavy load or your API key is still activating. Please try again in 60 seconds.";
+                btn.innerText = "RETRY AUDIT";
                 btn.disabled = false;
+                result.classList.remove('hidden');
             }
         }
     </script>
