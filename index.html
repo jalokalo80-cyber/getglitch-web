@@ -9,6 +9,7 @@
         body { background: #0a0a0a; color: white; font-family: 'Inter', sans-serif; }
         .gradient-text { background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .card { background: #161616; border: 1px solid #262626; border-radius: 12px; }
+        .modal-bg { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen p-6">
@@ -18,12 +19,12 @@
         <p class="text-gray-400 text-xl mb-10">Nechajte AI analyzovať váš web a nájdite skryté chyby, ktoré vás stoja peniaze.</p>
 
         <div class="card p-8 shadow-2xl">
-            <div class="mb-6">
-                <label class="block text-left text-sm font-medium text-gray-500 mb-2">Vložte URL vášho webu</label>
+            <div class="mb-6 text-left">
+                <label class="block text-sm font-medium text-gray-500 mb-2">Vložte URL vášho webu</label>
                 <input type="text" id="urlInput" placeholder="https://tvojweb.sk" class="w-full bg-black border border-gray-800 rounded-lg py-3 px-4 text-white focus:border-cyan-500 outline-none transition">
             </div>
             
-            <button onclick="startAudit()" id="auditBtn" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 rounded-lg transition transform hover:scale-[1.02]">
+            <button onclick="checkEmailRequirement()" id="auditBtn" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 rounded-lg transition transform hover:scale-[1.02]">
                 SPUSTIŤ AI AUDIT (49$ Value)
             </button>
 
@@ -37,23 +38,62 @@
         <p class="mt-10 text-gray-600 text-sm italic">Powered by Gemini Pro AI & GetGlitch.sk Engine</p>
     </div>
 
+    <div id="emailModal" class="fixed inset-0 modal-bg flex items-center justify-center hidden z-50 p-4">
+        <div class="card max-w-md w-full p-8 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+            <h2 class="text-2xl font-bold mb-2">Analýza takmer hotová! 🚀</h2>
+            <p class="text-gray-400 mb-6 text-sm">Našli sme kritické glitche. Kam vám máme poslať kompletný 20-stranový report?</p>
+            
+            <input type="email" id="leadEmail" placeholder="vas@email.com" class="w-full bg-black border border-gray-800 rounded-lg py-3 px-4 text-white focus:border-cyan-500 outline-none mb-4">
+            
+            <button onclick="submitLead()" class="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition">
+                Odomknúť výsledky
+            </button>
+            <p class="text-[10px] text-gray-600 mt-4 text-center text-uppercase">Súhlasíte so spracovaním e-mailu pre účely zaslania auditu.</p>
+        </div>
+    </div>
+
     <script>
+        let userEmail = "";
+
+        function checkEmailRequirement() {
+            const url = document.getElementById('urlInput').value;
+            if(!url) return alert("Vlož URL!");
+            
+            // Ak ešte nemáme e-mail, ukážeme okno
+            if (!userEmail) {
+                document.getElementById('emailModal').classList.remove('hidden');
+            } else {
+                startAudit();
+            }
+        }
+
+        function submitLead() {
+            const emailField = document.getElementById('leadEmail');
+            if(!emailField.value || !emailField.value.includes('@')) return alert("Zadajte platný e-mail!");
+            
+            userEmail = emailField.value;
+            console.log("Nový lead:", userEmail); // Toto uvidíš v konzole
+            
+            document.getElementById('emailModal').classList.add('hidden');
+            startAudit();
+        }
+
         function startAudit() {
             const url = document.getElementById('urlInput').value;
             const btn = document.getElementById('auditBtn');
             const result = document.getElementById('resultArea');
             const responseText = document.getElementById('aiResponse');
 
-            if(!url) return alert("Vlož URL!");
-
             btn.innerText = "Analyzujem glitche... (Môže to trvať 10s)";
             btn.disabled = true;
 
-            // Tu neskôr prepojíme tvoj API kľúč
             setTimeout(() => {
                 result.classList.remove('hidden');
-                responseText.innerText = "ANALÝZA PRE " + url + ": Našli sme 3 kritické chyby v konverznom pomere. Vaše tlačidlá nie sú dostatočne viditeľné na mobiloch a chýba vám jasné USP. (TOTO JE DEMO - Pre plný 20-stranový report si zakúpte licenciu na AppSumo!)";
+                responseText.innerText = "ANALÝZA PRE " + url + ": Našli sme 3 kritické chyby v konverznom pomere. Vaše tlačidlá nie sú dostatočne viditeľné na mobiloch a chýba vám jasné USP. Kompletný report bol práve odoslaný na " + userEmail + ". (TOTO JE DEMO - Pre plný report si zakúpte licenciu na AppSumo!)";
                 btn.innerText = "AUDIT DOKONČENÝ";
+                
+                // Tu sa scrollne na výsledok, aby ho používateľ videl
+                result.scrollIntoView({ behavior: 'smooth' });
             }, 3000);
         }
     </script>
