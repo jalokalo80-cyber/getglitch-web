@@ -80,25 +80,22 @@
                 <div class="w-10 h-10 border border-[var(--acid)] flex items-center justify-center text-xl shadow-[0_0_15px_var(--acid-dim)]">🗡️</div>
                 <div>
                     <h1 class="glitch-text text-2xl font-bold tracking-tighter text-white">Review<span class="text-[var(--acid)]">Assassin</span></h1>
-                    <p class="text-[10px] font-mono text-[var(--acid)] opacity-70 tracking-[0.2em]">PR DEFENSE PROTOCOL v2.7 STABLE</p>
+                    <p class="text-[10px] font-mono text-[var(--acid)] opacity-70 tracking-[0.2em]">ULTIMATE PR STABLE v3.0</p>
                 </div>
-            </div>
-            <div class="hidden md:block text-[10px] font-mono text-right opacity-50">
-                STATUS: SYSTEM ONLINE<br>MODEL: GEMINI 1.5 FLASH
             </div>
         </header>
 
         <div class="cyber-border p-6 mb-8">
             <label class="block font-mono text-[10px] text-[var(--acid)] mb-2 uppercase tracking-widest">Target Review Data:</label>
-            <textarea id="reviewInput" class="w-full h-40 p-4 rounded-sm font-light text-sm" placeholder="Vlož negatívnu recenziu sem..."></textarea>
+            <textarea id="reviewInput" class="w-full h-40 p-4 rounded-sm font-light text-sm" placeholder="Sem vlož negatívnu recenziu..."></textarea>
             
             <div class="flex justify-between items-center mt-6">
                 <div id="loading" class="hidden items-center gap-3">
                     <div class="w-4 h-4 border-2 border-[var(--acid)] border-t-transparent animate-spin rounded-full"></div>
-                    <span class="font-mono text-[10px] text-[var(--acid)] animate-pulse uppercase">Neutralizujem hrozbu...</span>
+                    <span class="font-mono text-[10px] text-[var(--acid)] animate-pulse uppercase">Likvidujem negativitu...</span>
                 </div>
                 <div id="spacer"></div>
-                <button id="generateBtn" onclick="generateResponses()" class="btn-assassin">⚡ Analyzovať a zničiť</button>
+                <button id="generateBtn" onclick="generateResponses()" class="btn-assassin">⚡ Spustiť neutralizáciu</button>
             </div>
         </div>
 
@@ -128,19 +125,14 @@
                     [ KOPÍROVAŤ ODPOVEĎ ]
                 </button>
             </div>
-
-            <div class="mt-6 flex items-center gap-4">
-                <div class="flex-1 h-[1px] bg-[var(--acid-dim)]"></div>
-                <div class="font-mono text-[10px] text-yellow-500">SAVED BRAND VALUE: $450.00</div>
-                <div class="flex-1 h-[1px] bg-[var(--acid-dim)]"></div>
-            </div>
         </div>
     </div>
 
     <script>
-        // --- KONFIGURÁCIA (UŽ OPRAVENÁ) ---
+        // --- FINÁLNA KONFIGURÁCIA ---
         const API_KEY = 'AIzaSyAESi5P01x2G1vqHFC3m--GLw5fXxhronk'; 
-        const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
+        // ZMENA NA GEMINI-PRO (NAJSTABILNEJŠÍ MODEL)
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
 
         let responses = { formal: '', kind: '', strategic: '' };
         let currentTab = 'formal';
@@ -157,12 +149,12 @@
             const text = responses[currentTab];
             if(!text) return;
             navigator.clipboard.writeText(text);
-            alert("Skopírované!");
+            alert("Skopírované do schránky!");
         }
 
         async function generateResponses() {
             const input = document.getElementById('reviewInput').value.trim();
-            if(!input) return alert("Zabudol si vložiť recenziu!");
+            if(!input) return alert("Vlož text recenzie!");
 
             const btn = document.getElementById('generateBtn');
             const loading = document.getElementById('loading');
@@ -175,10 +167,11 @@
             results.classList.add('hidden');
             errorBox.classList.add('hidden');
 
-            const prompt = `Si expert na PR. Napíš 3 krátke a trefné odpovede v slovenčine na túto recenziu: "${input}". 
-            FORMAL: [píš tu]
-            KIND: [píš tu]
-            STRATEGIC: [píš tu]`;
+            const prompt = `Si PR expert. Napíš 3 rôzne odpovede v slovenčine na túto recenziu: "${input}". 
+            Píš len čistý text bez hviezdičiek v tomto formáte:
+            FORMAL: [odpoveď]
+            KIND: [odpoveď]
+            STRATEGIC: [odpoveď]`;
 
             try {
                 const res = await fetch(API_URL, {
@@ -194,9 +187,9 @@
 
                 const rawText = data.candidates[0].content.parts[0].text;
 
-                responses.formal = rawText.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba.";
-                responses.kind = rawText.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba.";
-                responses.strategic = rawText.match(/STRATEGIC:(.*?)$/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba.";
+                responses.formal = rawText.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba generovania.";
+                responses.kind = rawText.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba generovania.";
+                responses.strategic = rawText.match(/STRATEGIC:(.*?)$/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba generovania.";
 
                 document.getElementById('text-formal').innerText = responses.formal;
                 document.getElementById('text-kind').innerText = responses.kind;
@@ -204,6 +197,7 @@
 
                 results.classList.remove('hidden');
             } catch (err) {
+                console.error(err);
                 document.getElementById('errorText').innerText = err.message;
                 errorBox.classList.remove('hidden');
             } finally {
