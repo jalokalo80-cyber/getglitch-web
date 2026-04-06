@@ -3,207 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReviewAssassin AI — Neutralize Negative Reviews</title>
+    <title>ReviewAssassin AI — Finálna Verzia</title>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@600;700&family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --acid: #00ffe7;
-            --acid-dim: rgba(0, 255, 231, 0.15);
-            --pink: #ff2d78;
-            --bg: #050810;
-            --panel: rgba(10, 15, 30, 0.9);
-        }
-        body {
-            background-color: var(--bg);
-            color: #c8d6e8;
-            font-family: 'Exo 2', sans-serif;
-            background-image: radial-gradient(circle at 50% 30%, #101a35 0%, var(--bg) 70%);
-            min-height: 100vh;
-        }
-        .cyber-border {
-            border: 1px solid var(--acid-dim);
-            position: relative;
-            background: var(--panel);
-            backdrop-filter: blur(10px);
-        }
-        .cyber-border::before {
-            content: ""; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px;
-            border-top: 2px solid var(--acid); border-left: 2px solid var(--acid);
-        }
-        .cyber-border::after {
-            content: ""; position: absolute; bottom: -1px; right: -1px; width: 10px; height: 10px;
-            border-bottom: 2px solid var(--acid); border-right: 2px solid var(--acid);
-        }
-        .btn-assassin {
-            background: transparent;
-            border: 1px solid var(--acid);
-            color: var(--acid);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            padding: 12px 30px;
-        }
-        .btn-assassin:hover:not(:disabled) {
-            background: var(--acid-dim);
-            box-shadow: 0 0 20px var(--acid-dim);
-            transform: scale(1.05);
-        }
-        .tab-btn {
-            font-family: 'Share Tech Mono', monospace;
-            padding: 8px 16px;
-            border-bottom: 2px solid transparent;
-            transition: 0.3s;
-            color: #666;
-        }
-        .tab-btn.active {
-            color: var(--acid);
-            border-bottom: 2px solid var(--acid);
-            text-shadow: 0 0 10px var(--acid-dim);
-        }
-        .response-pane { display: none; animation: fadeIn 0.4s ease-out; }
-        .response-pane.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .glitch-text { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; }
-        textarea { background: rgba(0,0,0,0.3) !important; border: 1px solid var(--acid-dim) !important; color: white !important; }
-        textarea:focus { border-color: var(--acid) !important; outline: none; }
+        :root { --acid: #00ffe7; --bg: #050810; }
+        body { background-color: var(--bg); color: #c8d6e8; font-family: 'Exo 2', sans-serif; min-height: 100vh; }
+        .cyber-border { border: 1px solid rgba(0, 255, 231, 0.2); background: rgba(10, 15, 30, 0.9); position: relative; }
+        .btn-assassin { border: 1px solid var(--acid); color: var(--acid); font-family: 'Rajdhani', sans-serif; text-transform: uppercase; padding: 12px 30px; transition: 0.3s; }
+        .btn-assassin:hover:not(:disabled) { background: rgba(0, 255, 231, 0.1); box-shadow: 0 0 20px rgba(0, 255, 231, 0.2); }
+        textarea { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(0, 255, 231, 0.2) !important; color: white !important; width: 100%; height: 150px; padding: 15px; }
+        .response-box { border-left: 3px solid var(--acid); background: rgba(255,255,255,0.03); padding: 15px; margin-top: 15px; }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="p-6 md:p-20">
 
     <div class="max-w-3xl mx-auto">
-        <header class="flex justify-between items-center mb-12">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 border border-[var(--acid)] flex items-center justify-center text-xl shadow-[0_0_15px_var(--acid-dim)]">🗡️</div>
-                <div>
-                    <h1 class="glitch-text text-2xl font-bold tracking-tighter text-white">Review<span class="text-[var(--acid)]">Assassin</span></h1>
-                    <p class="text-[10px] font-mono text-[var(--acid)] opacity-70 tracking-[0.2em]">ULTIMATE PR STABLE v3.0</p>
-                </div>
-            </div>
+        <header class="mb-10">
+            <h1 class="text-3xl font-bold text-white uppercase tracking-tighter">Review<span class="text-[var(--acid)]">Assassin</span></h1>
+            <p class="text-[10px] font-mono text-[var(--acid)] opacity-70">FREE AI TERMINATOR v5.0</p>
         </header>
 
         <div class="cyber-border p-6 mb-8">
-            <label class="block font-mono text-[10px] text-[var(--acid)] mb-2 uppercase tracking-widest">Target Review Data:</label>
-            <textarea id="reviewInput" class="w-full h-40 p-4 rounded-sm font-light text-sm" placeholder="Sem vlož negatívnu recenziu..."></textarea>
-            
-            <div class="flex justify-between items-center mt-6">
-                <div id="loading" class="hidden items-center gap-3">
-                    <div class="w-4 h-4 border-2 border-[var(--acid)] border-t-transparent animate-spin rounded-full"></div>
-                    <span class="font-mono text-[10px] text-[var(--acid)] animate-pulse uppercase">Likvidujem negativitu...</span>
-                </div>
-                <div id="spacer"></div>
-                <button id="generateBtn" onclick="generateResponses()" class="btn-assassin">⚡ Spustiť neutralizáciu</button>
+            <textarea id="reviewInput" placeholder="Vlož negatívnu recenziu sem..."></textarea>
+            <div class="flex justify-between items-center mt-4">
+                <div id="loader" class="hidden text-[var(--acid)] font-mono text-xs animate-pulse">GENERUJEM ODPOVEDE...</div>
+                <button id="genBtn" onclick="processReview()" class="btn-assassin ml-auto text-sm">⚡ ZNIČIŤ NEGATIVITU</button>
             </div>
         </div>
 
-        <div id="errorMsg" class="hidden mb-6 p-4 border border-[var(--pink)] bg-[rgba(255,45,120,0.1)] text-[var(--pink)] text-xs font-mono">
-            [!] ERROR: <span id="errorText"></span>
-        </div>
-
-        <div id="results" class="hidden">
-            <div class="flex gap-4 mb-4 border-b border-[var(--acid-dim)]">
-                <button class="tab-btn active" onclick="switchTab('formal', this)">FORMAL</button>
-                <button class="tab-btn" onclick="switchTab('kind', this)">KIND</button>
-                <button class="tab-btn" onclick="switchTab('strategic', this)">STRATEGIC</button>
+        <div id="results" class="hidden space-y-6">
+            <div class="response-box">
+                <h3 class="text-[var(--acid)] text-xs font-mono mb-2 uppercase">Formálna odpoveď:</h3>
+                <p id="res-formal" class="text-sm leading-relaxed"></p>
             </div>
-
-            <div class="cyber-border p-8 min-h-[200px]">
-                <div id="pane-formal" class="response-pane active">
-                    <p id="text-formal" class="text-sm leading-relaxed text-blue-50"></p>
-                </div>
-                <div id="pane-kind" class="response-pane">
-                    <p id="text-kind" class="text-sm leading-relaxed text-blue-50"></p>
-                </div>
-                <div id="pane-strategic" class="response-pane">
-                    <p id="text-strategic" class="text-sm leading-relaxed text-blue-50"></p>
-                </div>
-                
-                <button onclick="copyCurrent()" class="mt-8 text-[10px] font-mono text-[var(--acid)] border border-[var(--acid-dim)] px-3 py-1 hover:bg-[var(--acid-dim)] transition">
-                    [ KOPÍROVAŤ ODPOVEĎ ]
-                </button>
+            <div class="response-box" style="border-color: #ff2d78;">
+                <h3 class="text-[#ff2d78] text-xs font-mono mb-2 uppercase">Priateľská odpoveď:</h3>
+                <p id="res-kind" class="text-sm leading-relaxed"></p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- FINÁLNA KONFIGURÁCIA ---
-        const API_KEY = 'AIzaSyAESi5P01x2G1vqHFC3m--GLw5fXxhronk'; 
-        // ZMENA NA GEMINI-PRO (NAJSTABILNEJŠÍ MODEL)
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+        // SEM VLOŽ KĽÚČ Z AISTUDIO.GOOGLE.COM
+        const API_KEY = 'AIzaSyCm_MHCPb5N8AH4xfOzPwi2UxAEhB8YdT0'; 
+        
+        async function processReview() {
+            const text = document.getElementById('reviewInput').value;
+            if(!text) return alert("Nič si nenapísal!");
 
-        let responses = { formal: '', kind: '', strategic: '' };
-        let currentTab = 'formal';
-
-        function switchTab(tab, btn) {
-            currentTab = tab;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.response-pane').forEach(p => p.classList.remove('active'));
-            document.getElementById('pane-' + tab).classList.add('active');
-        }
-
-        function copyCurrent() {
-            const text = responses[currentTab];
-            if(!text) return;
-            navigator.clipboard.writeText(text);
-            alert("Skopírované do schránky!");
-        }
-
-        async function generateResponses() {
-            const input = document.getElementById('reviewInput').value.trim();
-            if(!input) return alert("Vlož text recenzie!");
-
-            const btn = document.getElementById('generateBtn');
-            const loading = document.getElementById('loading');
+            const loader = document.getElementById('loader');
             const results = document.getElementById('results');
-            const errorBox = document.getElementById('errorMsg');
+            const btn = document.getElementById('genBtn');
 
-            btn.disabled = true;
-            loading.classList.remove('hidden');
-            loading.classList.add('flex');
+            loader.classList.remove('hidden');
             results.classList.add('hidden');
-            errorBox.classList.add('hidden');
+            btn.disabled = true;
 
-            const prompt = `Si PR expert. Napíš 3 rôzne odpovede v slovenčine na túto recenziu: "${input}". 
-            Píš len čistý text bez hviezdičiek v tomto formáte:
-            FORMAL: [odpoveď]
-            KIND: [odpoveď]
-            STRATEGIC: [odpoveď]`;
+            // POUŽÍVAME MODEL 'gemini-1.5-flash' - NAJRÝCHLEJŠÍ FREE MODEL
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
             try {
-                const res = await fetch(API_URL, {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
+                        contents: [{ parts: [{ text: `Si expert na PR. Napíš dve slovenské odpovede na túto recenziu: "${text}". Prvá musí byť formálna a profesionálna, druhá milá a empatická. Rozdeľ ich značkou ###.` }] }]
                     })
                 });
 
-                const data = await res.json();
-                if (data.error) throw new Error(data.error.message);
+                const data = await response.json();
+                
+                if(data.error) throw new Error(data.error.message);
 
-                const rawText = data.candidates[0].content.parts[0].text;
+                const fullText = data.candidates[0].content.parts[0].text;
+                const splitText = fullText.split('###');
 
-                responses.formal = rawText.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba generovania.";
-                responses.kind = rawText.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba generovania.";
-                responses.strategic = rawText.match(/STRATEGIC:(.*?)$/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba generovania.";
-
-                document.getElementById('text-formal').innerText = responses.formal;
-                document.getElementById('text-kind').innerText = responses.kind;
-                document.getElementById('text-strategic').innerText = responses.strategic;
-
+                document.getElementById('res-formal').innerText = splitText[0].trim();
+                document.getElementById('res-kind').innerText = (splitText[1] || "AI vygenerovala jednu dlhú odpoveď.").trim();
+                
                 results.classList.remove('hidden');
-            } catch (err) {
-                console.error(err);
-                document.getElementById('errorText').innerText = err.message;
-                errorBox.classList.remove('hidden');
+            } catch (e) {
+                alert("Chyba: " + e.message + "\n\nSkontroluj, či je tvoj API kľúč správny!");
             } finally {
+                loader.classList.add('hidden');
                 btn.disabled = false;
-                loading.classList.add('hidden');
-                loading.classList.remove('flex');
             }
         }
     </script>
