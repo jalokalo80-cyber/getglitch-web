@@ -3,72 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReviewAssassin AI — Finálna Verzia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@600;700&family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>ReviewAssassin AI — Final Fix</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { --acid: #00ffe7; --bg: #050810; }
-        body { background-color: var(--bg); color: #c8d6e8; font-family: 'Exo 2', sans-serif; min-height: 100vh; }
-        .cyber-border { border: 1px solid rgba(0, 255, 231, 0.2); background: rgba(10, 15, 30, 0.9); position: relative; }
-        .btn-assassin { border: 1px solid var(--acid); color: var(--acid); font-family: 'Rajdhani', sans-serif; text-transform: uppercase; padding: 12px 30px; transition: 0.3s; }
-        .btn-assassin:hover:not(:disabled) { background: rgba(0, 255, 231, 0.1); box-shadow: 0 0 20px rgba(0, 255, 231, 0.2); }
-        textarea { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(0, 255, 231, 0.2) !important; color: white !important; width: 100%; height: 150px; padding: 15px; }
-        .response-box { border-left: 3px solid var(--acid); background: rgba(255,255,255,0.03); padding: 15px; margin-top: 15px; }
+        body { background: var(--bg); color: #c8d6e8; font-family: 'Exo 2', sans-serif; min-height: 100vh; }
+        .cyber-card { border: 1px solid rgba(0,255,231,0.2); background: rgba(10,15,30,0.95); backdrop-filter: blur(10px); }
+        .btn-kill { border: 1px solid var(--acid); color: var(--acid); font-family: 'Rajdhani', sans-serif; transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
+        .btn-kill:hover:not(:disabled) { background: rgba(0,255,231,0.1); box-shadow: 0 0 20px rgba(0,255,231,0.3); }
+        textarea { background: rgba(0,0,0,0.5) !important; border: 1px solid #1a2a4a !important; color: white !important; width: 100%; height: 140px; padding: 15px; font-size: 14px; }
+        .res-box { border-left: 2px solid var(--acid); background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; }
     </style>
 </head>
-<body class="p-6 md:p-20">
+<body class="p-6 md:p-20 flex justify-center items-center">
 
-    <div class="max-w-3xl mx-auto">
-        <header class="mb-10">
-            <h1 class="text-3xl font-bold text-white uppercase tracking-tighter">Review<span class="text-[var(--acid)]">Assassin</span></h1>
-            <p class="text-[10px] font-mono text-[var(--acid)] opacity-70">FREE AI TERMINATOR v5.0</p>
+    <div class="max-w-2xl w-full">
+        <header class="mb-8 text-center">
+            <h1 style="font-family: 'Rajdhani';" class="text-4xl font-bold text-white tracking-tighter uppercase">
+                Review<span class="text-[var(--acid)]">Assassin</span>
+            </h1>
+            <p class="text-[10px] font-mono text-[var(--acid)] opacity-60 tracking-[0.3em]">PRO-MODEL STABLE PROTOCOL v6.0</p>
         </header>
 
-        <div class="cyber-border p-6 mb-8">
-            <textarea id="reviewInput" placeholder="Vlož negatívnu recenziu sem..."></textarea>
+        <div class="cyber-card p-6 rounded-sm">
+            <textarea id="reviewInput" placeholder="Vlož sem ten 'výplod' od zákazníka..."></textarea>
+            
             <div class="flex justify-between items-center mt-4">
-                <div id="loader" class="hidden text-[var(--acid)] font-mono text-xs animate-pulse">GENERUJEM ODPOVEDE...</div>
-                <button id="genBtn" onclick="processReview()" class="btn-assassin ml-auto text-sm">⚡ ZNIČIŤ NEGATIVITU</button>
+                <div id="loader" class="hidden text-[var(--acid)] font-mono text-[10px] animate-pulse">ANALYZUJEM CIEĽ...</div>
+                <button id="genBtn" onclick="execute()" class="btn-kill ml-auto px-8 py-2 font-bold uppercase">⚡ Neutralizovať</button>
             </div>
         </div>
 
-        <div id="results" class="hidden space-y-6">
-            <div class="response-box">
-                <h3 class="text-[var(--acid)] text-xs font-mono mb-2 uppercase">Formálna odpoveď:</h3>
-                <p id="res-formal" class="text-sm leading-relaxed"></p>
+        <div id="results" class="hidden mt-8 space-y-4">
+            <div class="res-box">
+                <span class="text-[var(--acid)] font-mono text-[10px] uppercase block mb-1">Profesionálna likvidácia:</span>
+                <p id="res-1" class="text-sm leading-relaxed"></p>
             </div>
-            <div class="response-box" style="border-color: #ff2d78;">
-                <h3 class="text-[#ff2d78] text-xs font-mono mb-2 uppercase">Priateľská odpoveď:</h3>
-                <p id="res-kind" class="text-sm leading-relaxed"></p>
+            <div class="res-box" style="border-color: #ff2d78;">
+                <span class="text-[#ff2d78] font-mono text-[10px] uppercase block mb-1">Empatická likvidácia:</span>
+                <p id="res-2" class="text-sm leading-relaxed"></p>
             </div>
         </div>
     </div>
 
     <script>
-        // SEM VLOŽ KĽÚČ Z AISTUDIO.GOOGLE.COM
+        // SEM VLOŽ SVOJ KĽÚČ Z GOOGLE AI STUDIO
         const API_KEY = 'AIzaSyCm_MHCPb5N8AH4xfOzPwi2UxAEhB8YdT0'; 
-        
-        async function processReview() {
-            const text = document.getElementById('reviewInput').value;
-            if(!text) return alert("Nič si nenapísal!");
 
+        async function execute() {
+            const val = document.getElementById('reviewInput').value.trim();
+            if(!val) return;
+
+            const btn = document.getElementById('genBtn');
             const loader = document.getElementById('loader');
             const results = document.getElementById('results');
-            const btn = document.getElementById('genBtn');
 
+            btn.disabled = true;
             loader.classList.remove('hidden');
             results.classList.add('hidden');
-            btn.disabled = true;
 
-            // POUŽÍVAME MODEL 'gemini-1.5-flash' - NAJRÝCHLEJŠÍ FREE MODEL
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+            // ZMENA: Používame model 'gemini-pro', ktorý je najviac kompatibilný
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Si expert na PR. Napíš dve slovenské odpovede na túto recenziu: "${text}". Prvá musí byť formálna a profesionálna, druhá milá a empatická. Rozdeľ ich značkou ###.` }] }]
+                        contents: [{ parts: [{ text: `Si expert na PR. Napíš dve slovenské odpovede na túto recenziu: "${val}". Prvá nech je formálna, druhá milá. Oddeľ ich iba značkou ###.` }] }]
                     })
                 });
 
@@ -76,15 +79,15 @@
                 
                 if(data.error) throw new Error(data.error.message);
 
-                const fullText = data.candidates[0].content.parts[0].text;
-                const splitText = fullText.split('###');
+                const full = data.candidates[0].content.parts[0].text;
+                const parts = full.split('###');
 
-                document.getElementById('res-formal').innerText = splitText[0].trim();
-                document.getElementById('res-kind').innerText = (splitText[1] || "AI vygenerovala jednu dlhú odpoveď.").trim();
+                document.getElementById('res-1').innerText = parts[0].trim();
+                document.getElementById('res-2').innerText = (parts[1] || "AI neoddelila odpovede, skús znova.").trim();
                 
                 results.classList.remove('hidden');
             } catch (e) {
-                alert("Chyba: " + e.message + "\n\nSkontroluj, či je tvoj API kľúč správny!");
+                alert("SYSTÉMOVÁ CHYBA: " + e.message + "\n\nSkontroluj, či si použil správny API kľúč!");
             } finally {
                 loader.classList.add('hidden');
                 btn.disabled = false;
