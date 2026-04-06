@@ -80,25 +80,25 @@
                 <div class="w-10 h-10 border border-[var(--acid)] flex items-center justify-center text-xl shadow-[0_0_15px_var(--acid-dim)]">🗡️</div>
                 <div>
                     <h1 class="glitch-text text-2xl font-bold tracking-tighter text-white">Review<span class="text-[var(--acid)]">Assassin</span></h1>
-                    <p class="text-[10px] font-mono text-[var(--acid)] opacity-70 tracking-[0.2em]">PR DEFENSE PROTOCOL v2.6</p>
+                    <p class="text-[10px] font-mono text-[var(--acid)] opacity-70 tracking-[0.2em]">PR DEFENSE PROTOCOL v2.7 STABLE</p>
                 </div>
             </div>
             <div class="hidden md:block text-[10px] font-mono text-right opacity-50">
-                STATUS: SYSTEM ONLINE<br>ENCRYPTION: ACTIVE
+                STATUS: SYSTEM ONLINE<br>MODEL: GEMINI 1.5 FLASH
             </div>
         </header>
 
         <div class="cyber-border p-6 mb-8">
             <label class="block font-mono text-[10px] text-[var(--acid)] mb-2 uppercase tracking-widest">Target Review Data:</label>
-            <textarea id="reviewInput" class="w-full h-40 p-4 rounded-sm font-light text-sm" placeholder="Sem vlož negatívnu recenziu, ktorú potrebuješ zneutralizovať..."></textarea>
+            <textarea id="reviewInput" class="w-full h-40 p-4 rounded-sm font-light text-sm" placeholder="Vlož negatívnu recenziu sem..."></textarea>
             
             <div class="flex justify-between items-center mt-6">
                 <div id="loading" class="hidden items-center gap-3">
                     <div class="w-4 h-4 border-2 border-[var(--acid)] border-t-transparent animate-spin rounded-full"></div>
-                    <span class="font-mono text-[10px] text-[var(--acid)] animate-pulse uppercase">Spracovávam protokoly...</span>
+                    <span class="font-mono text-[10px] text-[var(--acid)] animate-pulse uppercase">Neutralizujem hrozbu...</span>
                 </div>
                 <div id="spacer"></div>
-                <button id="generateBtn" onclick="generateResponses()" class="btn-assassin">⚡ Spustiť analýzu</button>
+                <button id="generateBtn" onclick="generateResponses()" class="btn-assassin">⚡ Analyzovať a zničiť</button>
             </div>
         </div>
 
@@ -138,9 +138,9 @@
     </div>
 
     <script>
-        // --- KONFIGURÁCIA ---
-        const API_KEY = 'AIzaSyAESi5P01x2G1vqHFC3m--GLw5fXxhronk'; // SEM VLOŽ SVOJ KĽÚČ
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        // --- KONFIGURÁCIA (UŽ OPRAVENÁ) ---
+        const API_KEY = 'AIzaSyAESi5P01x2G1vqHFC3m--GLw5fXxhronk'; 
+        const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
 
         let responses = { formal: '', kind: '', strategic: '' };
         let currentTab = 'formal';
@@ -157,30 +157,28 @@
             const text = responses[currentTab];
             if(!text) return;
             navigator.clipboard.writeText(text);
-            alert("Skopírované do schránky!");
+            alert("Skopírované!");
         }
 
         async function generateResponses() {
             const input = document.getElementById('reviewInput').value.trim();
-            if(!input) return alert("Vlož text recenzie!");
+            if(!input) return alert("Zabudol si vložiť recenziu!");
 
             const btn = document.getElementById('generateBtn');
             const loading = document.getElementById('loading');
             const results = document.getElementById('results');
             const errorBox = document.getElementById('errorMsg');
 
-            // UI Reset
             btn.disabled = true;
             loading.classList.remove('hidden');
             loading.classList.add('flex');
             results.classList.add('hidden');
             errorBox.classList.add('hidden');
 
-            const prompt = `Si expert na PR a zákaznícky servis. Napíš 3 rôzne odpovede v slovenčine na túto negatívnu recenziu: "${input}". 
-            Odpovede musia byť v tomto formáte (nepoužívaj hviezdičky):
-            FORMAL: [Profesionálna a úctivá odpoveď]
-            KIND: [Empatická a veľmi milá odpoveď]
-            STRATEGIC: [Odpoveď zameraná na vyriešenie problému a ochranu mena firmy]`;
+            const prompt = `Si expert na PR. Napíš 3 krátke a trefné odpovede v slovenčine na túto recenziu: "${input}". 
+            FORMAL: [píš tu]
+            KIND: [píš tu]
+            STRATEGIC: [píš tu]`;
 
             try {
                 const res = await fetch(API_URL, {
@@ -192,20 +190,13 @@
                 });
 
                 const data = await res.json();
-
                 if (data.error) throw new Error(data.error.message);
 
                 const rawText = data.candidates[0].content.parts[0].text;
 
-                // Parsovanie výsledkov pomocou Regexu
-                responses.formal = rawText.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.trim() || "Chyba pri generovaní.";
-                responses.kind = rawText.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.trim() || "Chyba pri generovaní.";
-                responses.strategic = rawText.match(/STRATEGIC:(.*?)$/s)?.[1]?.trim() || "Chyba pri generovaní.";
-
-                // Čistenie od prípadných zvyšných značiek
-                Object.keys(responses).forEach(key => {
-                    responses[key] = responses[key].replace(/\*/g, '');
-                });
+                responses.formal = rawText.match(/FORMAL:(.*?)(?=KIND:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba.";
+                responses.kind = rawText.match(/KIND:(.*?)(?=STRATEGIC:|$)/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba.";
+                responses.strategic = rawText.match(/STRATEGIC:(.*?)$/s)?.[1]?.replace(/\*/g, '').trim() || "Chyba.";
 
                 document.getElementById('text-formal').innerText = responses.formal;
                 document.getElementById('text-kind').innerText = responses.kind;
@@ -213,7 +204,6 @@
 
                 results.classList.remove('hidden');
             } catch (err) {
-                console.error(err);
                 document.getElementById('errorText').innerText = err.message;
                 errorBox.classList.remove('hidden');
             } finally {
