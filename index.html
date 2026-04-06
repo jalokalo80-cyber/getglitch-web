@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlitchFinder AI | Odhaľte chyby vo vašom biznise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0a0a0a; color: white; font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card { background: #161616; border: 1px solid #262626; border-radius: 12px; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-6">
+
+    <div class="max-w-3xl w-full text-center">
+        <h1 class="text-5xl font-bold mb-4 tracking-tight">Find the <span class="gradient-text">Glitch</span> in your Business.</h1>
+        <p class="text-gray-400 text-xl mb-10">Nechajte AI analyzovať váš web a nájdite skryté chyby, ktoré vás stoja peniaze.</p>
+
+        <div class="card p-8 shadow-2xl">
+            <div class="mb-6">
+                <label class="block text-left text-sm font-medium text-gray-500 mb-2">Vložte URL vášho webu</label>
+                <input type="text" id="urlInput" placeholder="https://tvojweb.sk" class="w-full bg-black border border-gray-800 rounded-lg py-3 px-4 text-white focus:border-cyan-500 outline-none transition">
+            </div>
+            
+            <button onclick="startAudit()" id="auditBtn" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 rounded-lg transition transform hover:scale-[1.02]">
+                SPUSTIŤ AI AUDIT (49$ Value)
+            </button>
+
+            <div id="resultArea" class="mt-8 text-left hidden">
+                <div class="p-4 bg-cyan-900/20 border border-cyan-800 rounded-lg">
+                    <p id="aiResponse" class="text-cyan-100 text-sm leading-relaxed"></p>
+                </div>
+            </div>
+        </div>
+
+        <p class="mt-10 text-gray-600 text-sm italic">Powered by Gemini Pro AI & GetGlitch.sk Engine</p>
+    </div>
+
+    <script>
+        function startAudit() {
+            const url = document.getElementById('urlInput').value;
+            const btn = document.getElementById('auditBtn');
+            const result = document.getElementById('resultArea');
+            const responseText = document.getElementById('aiResponse');
+
+            if(!url) return alert("Vlož URL!");
+
+            btn.innerText = "Analyzujem glitche... (Môže to trvať 10s)";
+            btn.disabled = true;
+
+            // Tu neskôr prepojíme tvoj API kľúč
+            setTimeout(() => {
+                result.classList.remove('hidden');
+                responseText.innerText = "ANALÝZA PRE " + url + ": Našli sme 3 kritické chyby v konverznom pomere. Vaše tlačidlá nie sú dostatočne viditeľné na mobiloch a chýba vám jasné USP. (TOTO JE DEMO - Pre plný 20-stranový report si zakúpte licenciu na AppSumo!)";
+                btn.innerText = "AUDIT DOKONČENÝ";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
